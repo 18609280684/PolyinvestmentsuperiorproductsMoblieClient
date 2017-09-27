@@ -13,6 +13,13 @@ import {
 	TabNavigator
 } from 'react-navigation';
 
+const BANNER_IMGS = [
+	require('../images/banner/1.jpg'),
+	require('../images/banner/2.jpg'),
+	require('../images/banner/3.jpg'),
+	require('../images/banner/4.jpg')
+];
+
 class ConsultationView extends Component {
 	render() {
 		return (
