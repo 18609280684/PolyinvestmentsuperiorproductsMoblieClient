@@ -15,11 +15,17 @@ import {
 	TabNavigator
 } from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
+// import RootTabNavigationBar from './TabNavigatorRoot/TabNavigatorRoot.js';
 
 
 
 class DrawerNavigatorShareView extends Component {
-
+	static navigationOptions = ({
+		navigation
+	}) => ({
+		headerLeft: <Button onPress = {() => navigation.goBack()} 
+						title = 'Back'/>
+	});
 
 	render() {
 		return (
@@ -28,7 +34,15 @@ class DrawerNavigatorShareView extends Component {
 	}
 }
 
+//
 class DrawerNavigatorIntegralView extends Component {
+	static navigationOptions = ({
+		navigation
+	}) => ({
+		headerLeft: <Button onPress = {() => navigation.goBack()} 
+						title = 'Back'/>
+	});
+
 	render() {
 		return (
 			<Text>DrawerNavigatorIntegralView</Text>
@@ -36,7 +50,15 @@ class DrawerNavigatorIntegralView extends Component {
 	}
 }
 
+//
 class DrawerAboutUsView extends Component {
+	static navigationOptions = ({
+		navigation
+	}) => ({
+		headerLeft: <Button onPress = {() => navigation.goBack()} 
+						title = 'Back'/>
+	});
+
 	render() {
 		return (
 			<Text>DrawerAboutUsView</Text>
@@ -46,10 +68,17 @@ class DrawerAboutUsView extends Component {
 
 //TabNavigatorView
 class TabNavigatorConsultationView extends Component {
+	static navigationOptions = ({
+		navigation
+	}) => ({
+		headerLeft: <Button onPress = {() => navigation.navigate('DrawerOpen')}
+					title = 'More'/>
+	});
 
+	//SplashScreen设置
 	componentDidMount() {
 		this.timer = setTimeout(
-			() => SplashScreen.hide(), 3000
+			() => SplashScreen.hide(), 2000
 		);
 	}
 
@@ -63,7 +92,7 @@ class TabNavigatorConsultationView extends Component {
 		} = this.props.navigation;
 		return (
 			<View style = {{flex:1}}>
-			< Button onPress = {() => navigate('DrawerOpen')}
+			< Button onPress = {() => Alert.alert('Touch me')}
 				title = 'Touch me' / > 
 			
 			</View>
@@ -71,14 +100,21 @@ class TabNavigatorConsultationView extends Component {
 	}
 }
 
+//
 class TabNavigatorConsultationViewForumView extends Component {
 	render() {
-		return (
-			<Text>ForumView</Text>
+		const {
+			navigate
+		} = this.props.navigation;
+		return ( < Text onPress = {
+				() => navigate('')
+			} > ForumView < /Text>
+
 		);
 	}
 }
 
+//
 class TabNavigatorConsultationViewRankingListView extends Component {
 	render() {
 		return (
@@ -87,6 +123,7 @@ class TabNavigatorConsultationViewRankingListView extends Component {
 	}
 }
 
+//
 const RootTabNavigationBar = TabNavigator({
 	Consultation: {
 		screen: TabNavigatorConsultationView,
@@ -122,16 +159,18 @@ const RootStackNavigator = StackNavigator({
 		screen: RootDrawerNavigator,
 	},
 }, {
-	navigationOptions: {
-		headerBackTitle: 'Back',
-		headerTintColor: '#333333',
-		showIcon: true,
-		swipeEnabled: false,
-		animationEnabled: false,
+	navigationOptions: ({
+		navigation
+	}) => ({
+		headerTitle: '首页',
+		headerTitleStyle: {
+			alignSelf: 'center',
+		},
+		// headerLeft: <Button onPress = {() => navigation.goBack()}
+		// 	title = 'Back'/>
+	}),
 
-	},
-
-	mode: 'card',
+	mode: 'modal',
 });
 
 export default class App extends Component {
