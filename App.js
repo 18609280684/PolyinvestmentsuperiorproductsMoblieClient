@@ -15,8 +15,8 @@ import {
 	TabNavigator
 } from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
+import Login from './Login.js';
 // import RootTabNavigationBar from './TabNavigatorRoot/TabNavigatorRoot.js';
-
 
 
 class DrawerNavigatorShareView extends Component {
@@ -71,8 +71,13 @@ class TabNavigatorConsultationView extends Component {
 	static navigationOptions = ({
 		navigation
 	}) => ({
-		headerLeft: <Button onPress = {() => navigation.navigate('DrawerOpen')}
-					title = 'More'/>
+		headerLeft: < Button onPress = {
+			() => {
+				navigation.navigate('DrawerOpen');
+			}
+		}
+		title = 'More' / > ,
+		// header: false,
 	});
 
 	//SplashScreen设置
@@ -92,7 +97,7 @@ class TabNavigatorConsultationView extends Component {
 		} = this.props.navigation;
 		return (
 			<View style = {{flex:1}}>
-			< Button onPress = {() => Alert.alert('Touch me')}
+			< Button onPress = {() => navigate('Login')}
 				title = 'Touch me' / > 
 			
 			</View>
@@ -138,6 +143,7 @@ const RootTabNavigationBar = TabNavigator({
 	tabBarPosition: 'bottom',
 });
 
+
 const RootDrawerNavigator = DrawerNavigator({
 	Home: {
 		screen: RootTabNavigationBar,
@@ -151,12 +157,16 @@ const RootDrawerNavigator = DrawerNavigator({
 	AboutUs: {
 		screen: DrawerAboutUsView,
 	},
-
 });
+
+
 
 const RootStackNavigator = StackNavigator({
 	Home: {
 		screen: RootDrawerNavigator,
+	},
+	Login: {
+		screen: Login,
 	},
 }, {
 	navigationOptions: ({
