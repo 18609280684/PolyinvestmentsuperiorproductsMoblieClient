@@ -98,14 +98,14 @@ const RootStackNavigator = StackNavigator({
 	Login: {
 		screen: Login,
 	},
-	RegisterView:{
-		screen:RegisterView,
+	RegisterView: {
+		screen: RegisterView,
 	},
-	ForgetPasswordView:{
-		screen:ForgetPasswordView,
+	ForgetPasswordView: {
+		screen: ForgetPasswordView,
 	},
-	ConsultationViewDetailView:{
-		screen:ConsultationViewDetailView,
+	ConsultationViewDetailView: {
+		screen: ConsultationViewDetailView,
 	},
 }, {
 	navigationOptions: ({
@@ -123,8 +123,18 @@ const RootStackNavigator = StackNavigator({
 });
 
 export default class App extends Component {
+
+	componentDidMount() {
+		this.timer = setTimeout(() => SplashScreen.hide(), 2000);
+	}
+
+	componentWillMount() {
+		this.timer && clearTimeout(this.timer);
+	}
+
 	render() {
 		return (
+			//<ForgetPasswordView />
 			<RootStackNavigator />
 			//<RootTabNavigationBar />
 			//<RootDrawerNavigator />
