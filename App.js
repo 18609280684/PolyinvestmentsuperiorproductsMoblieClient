@@ -15,8 +15,15 @@ import {
 	TabNavigator
 } from 'react-navigation';
 import SplashScreen from 'react-native-splash-screen';
-import Login from './Login.js';
-// import RootTabNavigationBar from './TabNavigatorRoot/TabNavigatorRoot.js';
+import {
+	Login,
+	RegisterView,
+	ForgetPasswordView
+} from './Login.js';
+import {
+	RootTabNavigationBar,
+	ConsultationViewDetailView
+} from './TabNavigatorRoot/TabNavigatorRoot.js';
 
 
 class DrawerNavigatorShareView extends Component {
@@ -66,83 +73,6 @@ class DrawerAboutUsView extends Component {
 	}
 }
 
-//TabNavigatorView
-class TabNavigatorConsultationView extends Component {
-	static navigationOptions = ({
-		navigation
-	}) => ({
-		headerLeft: < Button onPress = {
-			() => {
-				navigation.navigate('DrawerOpen');
-			}
-		}
-		title = 'More' / > ,
-		// header: false,
-	});
-
-	//SplashScreen设置
-	componentDidMount() {
-		this.timer = setTimeout(
-			() => SplashScreen.hide(), 2000
-		);
-	}
-
-	componentWillUnmount() {
-		this.timer && clearTimeout(this.timer);
-	}
-
-	render() {
-		const {
-			navigate
-		} = this.props.navigation;
-		return (
-			<View style = {{flex:1}}>
-			< Button onPress = {() => navigate('Login')}
-				title = 'Touch me' / > 
-			
-			</View>
-		);
-	}
-}
-
-//
-class TabNavigatorConsultationViewForumView extends Component {
-	render() {
-		const {
-			navigate
-		} = this.props.navigation;
-		return ( < Text onPress = {
-				() => navigate('')
-			} > ForumView < /Text>
-
-		);
-	}
-}
-
-//
-class TabNavigatorConsultationViewRankingListView extends Component {
-	render() {
-		return (
-			<Text>RankingListView</Text>
-		);
-	}
-}
-
-//
-const RootTabNavigationBar = TabNavigator({
-	Consultation: {
-		screen: TabNavigatorConsultationView,
-	},
-	Forum: {
-		screen: TabNavigatorConsultationViewForumView,
-	},
-	RankingList: {
-		screen: TabNavigatorConsultationViewRankingListView,
-	},
-}, {
-	tabBarPosition: 'bottom',
-});
-
 
 const RootDrawerNavigator = DrawerNavigator({
 	Home: {
@@ -167,6 +97,15 @@ const RootStackNavigator = StackNavigator({
 	},
 	Login: {
 		screen: Login,
+	},
+	RegisterView:{
+		screen:RegisterView,
+	},
+	ForgetPasswordView:{
+		screen:ForgetPasswordView,
+	},
+	ConsultationViewDetailView:{
+		screen:ConsultationViewDetailView,
 	},
 }, {
 	navigationOptions: ({
