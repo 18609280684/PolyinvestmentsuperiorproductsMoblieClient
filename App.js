@@ -22,7 +22,9 @@ import {
 } from './Login.js';
 import {
 	RootTabNavigationBar,
-	ConsultationViewDetailView
+	ConsultationViewDetailView,
+	ForeignExchangeDetailView,
+	ForumViewDetail
 } from './TabNavigatorRoot/TabNavigatorRoot.js';
 
 
@@ -107,10 +109,17 @@ const RootStackNavigator = StackNavigator({
 	ConsultationViewDetailView: {
 		screen: ConsultationViewDetailView,
 	},
+	ForeignExchangeDetailView:{
+		screen:ForeignExchangeDetailView,
+	},
+	ForumViewDetail:{
+		screen:ForumViewDetail,
+	},
 }, {
 	navigationOptions: ({
 		navigation
 	}) => ({
+		header:false,
 		headerTitle: '首页',
 		headerTitleStyle: {
 			alignSelf: 'center',
@@ -119,7 +128,7 @@ const RootStackNavigator = StackNavigator({
 		// 	title = 'Back'/>
 	}),
 
-	mode: 'modal',
+	mode: 'card',
 });
 
 export default class App extends Component {
@@ -134,8 +143,11 @@ export default class App extends Component {
 
 	render() {
 		return (
+
+			//<RootStackNavigator />
+			
+			<Login />
 			//<ForgetPasswordView />
-			<RootStackNavigator />
 			//<RootTabNavigationBar />
 			//<RootDrawerNavigator />
 		);

@@ -10,15 +10,23 @@ import {
   View,
   TouchableHighlight,
   Alert,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
 
 import t from 'tcomb-form-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import CookieManager from 'react-native-cookies';
 import {
-  RequestUrl
+  RequestUrl,
+  Banner_Imgs,
 } from './Public/Constants.js';
+import {
+  scaleSize,
+  setSpText,
+  deviceWidth
+} from './Public/ScreenAdaptationUtil.js';
+
 
 
 var Form = t.form.Form;
@@ -117,28 +125,68 @@ class Login extends Component {
   }
 
   render() {
-    const {
-      navigate
-    } = this.props.navigation;
+    // const {
+    //   navigate
+    // } = this.props.navigation;
     return (
-      <View style={styles.container}>
-      <Spinner visible = {this.state.visible} textContent = {'Loading...'} textStyle = {{color: '#FFF'}}/>
-
-      <Form
-      	ref = "form"
-      	type = {Person}
-      	options = {options}
-      	/>
-      	<TouchableHighlight style = {styles.button} onPress = {this._onPress.bind(this)} underlayColor = '#99d9f4'>
-      		<Text style={styles.buttonText}>
-      			提交
-      		</Text>
-      	</TouchableHighlight>
-        <View  style = {{ flexDirection:'row',justifyContent:'space-between'}}>
-            <Text onPress = {() => navigate('RegisterView')}>注册</Text>
-            <Text onPress = {() => navigate('ForgetPasswordView')}>忘记密码</Text>
+      <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+        source = {Banner_Imgs.LOGINPAGE_BG}>
+       <View style={{flex: 1,}}>
+      
+          <View style={{flex: 0.3,justifyContent:'center',alignItems:'center',marginTop:scaleSize(150)}}>
+            <Image
+              style={{height:scaleSize(224),width:scaleSize(187),}}
+              source={Banner_Imgs.LOGINPAGE_LOGO}
+            />
           </View>
-      </View>
+
+          <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_ZHANGHAO}
+            />
+        
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_MIMA}
+            />
+
+            <View style={{flexDirection:'row',marginBottom:scaleSize(30)}}>
+                <TouchableHighlight onPress = {() => Alert.alert()}>
+                    <Text style={{fontSize:setSpText(13),color:'rgb(156,154,143)'}}>注册用户</Text>
+                </TouchableHighlight>
+                  <View style={{width:scaleSize(200)}}>
+                  </View>
+                <TouchableHighlight onPress = {() => Alert.alert()}>
+                    <Text style={{fontSize:setSpText(13),color:'rgb(156,154,143)'}}>
+                      忘记密码
+                    </Text>
+                </TouchableHighlight>
+            </View>
+
+            <TouchableHighlight
+              onPress={() => Alert.alert('提交')}>
+                <Image
+                  style={{height:scaleSize(72),width:scaleSize(420)}}
+                  source={Banner_Imgs.LOGINPAGE_BUTTON}
+                />
+            </TouchableHighlight>
+          </View>
+          <View style={{flex: 0.3,alignItems:'center',justifyContent:'flex-end',marginBottom:scaleSize(150)}}>
+          <Text></Text>
+              <Image
+                style={{height:scaleSize(30),width:scaleSize(650),marginBottom:scaleSize(50)}}
+                source={Banner_Imgs.LOGINPAGE_WIXINFENGE}
+              />
+              <TouchableHighlight onPress = {() => Alert.alert('')}>
+                <Image
+                  style={{height:scaleSize(78),width:scaleSize(78)}}
+                  source={Banner_Imgs.LOGINPAGE_WIXIN}
+                />
+              </TouchableHighlight>
+          </View>
+       </View>
+      </Image>
     );
   }
 }
@@ -247,6 +295,7 @@ class RegisterView extends Component {
 
 const styles = StyleSheet.create({
   container: {
+
     justifyContent: 'center',
     marginTop: 50,
     padding: 20,
