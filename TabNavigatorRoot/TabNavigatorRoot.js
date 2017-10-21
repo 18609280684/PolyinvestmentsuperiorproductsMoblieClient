@@ -11,7 +11,8 @@ import {
 	FlatList,
 	Image,
 	TouchableHighlight,
-	ProgressBarAndroid
+	ProgressBarAndroid,
+	TextInput
 } from 'react-native';
 import {
 	TabNavigator
@@ -20,17 +21,25 @@ import {
 import {
 	RequestUrl,
 	Banner_Imgs,
+	Constants
 } from '../Public/Constants.js';
 
 import {
 	renderLoadingView,
 	renderErrorView,
+	ToastShow
 } from '../Public/Utils.js';
 import {
 	scaleSize,
 	setSpText,
-	deviceWidth
+	deviceWidth,
+	deviceHeight
 } from '../Public/ScreenAdaptationUtil.js';
+import Swiper from 'react-native-swiper-animated';
+import PopupDialog,{
+	DialogTitle,
+	SlideAnimation  
+} from 'react-native-popup-dialog';
 
 
 var ITEM_HEIGHT = 400;
@@ -50,7 +59,7 @@ class ConsultationView extends Component {
 		// 		}
 		// 	} >
 		// 	More < /Text>,
-		header: false,
+		// header: false,
 		tabBarLabel: '首页',
 		tabBarIcon: ({
 			tintColor
@@ -128,7 +137,7 @@ class ConsultationView extends Component {
 
 					<View style={{flexDirection:'row',height:scaleSize(155), backgroundColor:'#0F2435'}}>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => Alert.alert('Touch MT4')}>
+						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => this.popupDialog.show()}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
 								<Image
 							  	style={{width:scaleSize(58),height:scaleSize(58),}}
@@ -138,7 +147,7 @@ class ConsultationView extends Component {
 							</View>
 						</TouchableHighlight>
 						
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => Alert.alert('Touch MT3')}>
+						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => this.popupDialog.show()}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
 								<Image
 							  	style={{width:scaleSize(58),height:scaleSize(58),}}
@@ -148,7 +157,7 @@ class ConsultationView extends Component {
 							</View>
 						</TouchableHighlight>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => Alert.alert('Touch MT2')}>
+						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => this.popupDialog.show()}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
 								<Image
 							  	style={{width:scaleSize(58),height:scaleSize(58),}}
@@ -158,7 +167,7 @@ class ConsultationView extends Component {
 							</View>
 						</TouchableHighlight>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => Alert.alert('Touch MT1')}>
+						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => this.popupDialog.show()}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
 								<Image
 							  	style={{width:scaleSize(58),height:scaleSize(58),}}
@@ -180,6 +189,50 @@ class ConsultationView extends Component {
 		return (
 
 			<View style={{flex: 1, backgroundColor:'#071C2D'}}>
+
+				<PopupDialog  dialogTitle={<DialogTitle title="积分转入" titleStyle = {{backgroundColor:'#F3D671'}} titleTextStyle = {{color:'black'}}/>}
+    				ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+    				 dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
+					 width = {deviceWidth - 80}
+					 height = {deviceHeight/2 - 100}
+    				 >
+    				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
+      					<Text style={{fontSize:setSpText(15),color:'rgb(248,231,162)',textAlign:'center',textAlignVertical:'center'}}>
+      					  MT4平台
+      					</Text>
+      					<Text style={{fontSize:setSpText(13),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>
+      					  账户积分:15000分
+      					</Text>
+      					<View style={{flex: 0.3,flexDirection:'row',alignItems:'center',}}>
+      						<Text style={{fontSize:setSpText(13),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>
+      						  转入积分
+      						</Text>
+      						<TextInput  style={{height:scaleSize(70),width:scaleSize(350),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1}}  
+               					onChangeText={(text) =>console.log('asdasdasd')}
+                				placeholder = "请输入转入的积分" 
+                				placeholderTextColor  = 'gray'
+              					secureTextEntry  = {false}
+              					underlineColorAndroid = 'transparent'
+              					keyboardType = 'numeric'
+              				/>
+      					</View>
+      					
+      					<View style = {{flex: 0.5,alignItems:'center'}}>
+							<TouchableHighlight onPress={() => {
+								this.popupDialog.dismiss();
+								ToastShow('积分转入成功！',Constants.TOAST_SHORT);
+							}}>
+              				 	<Image
+              				 		style={{height:(deviceHeight/2 - 100)/5,width:deviceWidth - 100,marginTop:scaleSize(50)}}
+              				  		source={Banner_Imgs.POPPAGE_CONFIRMINTEGRALTURNBUTTON}
+              					/>
+              				</TouchableHighlight>
+      					</View>
+      					
+
+    				</View>
+ 			    </PopupDialog>
+
 				<FlatList 
 						 ref={(flatList)=>this._flatList = flatList}
 						  ListHeaderComponent={this._header}			
@@ -240,7 +293,7 @@ class ConsultationView extends Component {
 					</Image>
 				</View>
 				<View style={{flex: 0.15,}}>
-					<TouchableHighlight style = {{flex: 1,}} onPress = {() => navigate('ConsultationViewDetailView',{item:item.item})}>
+					<TouchableHighlight style = {{flex: 1,}} onPress = {() => navigate('ForumViewDetail',{item:item.item})}>
 						<Text style = {{flex:1,textAlign:'center',textAlignVertical:'center',fontSize:setSpText(11),color:'#F3D671'}}>
 							参与评论
 						</Text>
@@ -268,7 +321,7 @@ class ConsultationView extends Component {
 					/>
 				</View>
 				<View style={{flex: 0.15,}}>
-					<TouchableHighlight style = {{flex: 1,}} onPress = {() => navigate('ConsultationViewDetailView',{item:item.item})}>
+					<TouchableHighlight style = {{flex: 1,}} onPress = {() => navigate('GuanggaoViewDetailView',{item:item.item})}>
 						<Text style = {{flex:1,textAlign:'center',textAlignVertical:'center',fontSize:setSpText(11),color:'#F3D671'}}>
 							立即领取
 						</Text>
@@ -749,8 +802,8 @@ class BusinessSchoolView extends Component {
 }
 
 
-//主页详情页面
-class ConsultationViewDetailView extends Component {
+//广告详情页面
+class GuanggaoViewDetailView extends Component {
 
 	constructor(props) {
 		super(props);
@@ -794,31 +847,61 @@ class ConsultationViewDetailView extends Component {
 	}
 
 	renderData() {
-
-		switch (this.state.data.type) {
-			case '0':
-				return this.drawTieBaView();
-				break;
-			case '1':
-			case '2':
-				return this.drawGuangGaoView();
-				break;
-			default:
-				return this.drawDefaultView();
-
-		}
-	}
-
-	drawTieBaView() {
-		return (<Text>drawTieBaView</Text>);
-	}
-
-	drawGuangGaoView() {
-		return (<Text>drawGuangGaoView</Text>);
-	}
-
-	drawDefaultView() {
-		return (<Text>drawDefaultView</Text>);
+		const{navigation} = this.props;
+		return(
+			<View style={{flex: 1,backgroundColor:'#071C2D'}}>
+				<View style = {{flex: 0.1, flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),backgroundColor:'#000000'}}>
+						<Text style = {{fontSize:setSpText(15), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
+						<Text style = {{fontSize:setSpText(20), color:'#F3D671',}}>外汇详情            </Text>
+						<Text></Text>
+				</View>
+				<View style={{flex: 0.8,}}>
+						<View style={{flex: 0.9,justifyContent:'center',alignItems:'center'}}>
+							<Text style={{flex: 0.1,fontSize:setSpText(18),color:'#F3D671',marginTop:scaleSize(20)}}>
+							  广告标题
+							</Text>
+							<Image
+							  style={{flex: 0.3,width:deviceWidth-60,height:scaleSize(248)}}
+							  source={Banner_Imgs.GUANGGAOPAGE_BANNER}
+							/>
+							<Text style={{flex: 0.6,fontSize:setSpText(11),width:deviceWidth-60,color:'rgb(128,128,128)',marginTop:scaleSize(36)}}>
+							      欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
+							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
+							  环球外汇行情中心显示，北京时间11:19，
+										澳元/美元报0.7848/49。
+										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
+							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
+							  环球外汇行情中心显示，北京时间11:19，
+										澳元/美元报0.7848/49。
+										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
+							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
+							  环球外汇行情中心显示，北京时间11:19，
+										澳元/美元报0.7848/49。
+										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
+							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
+							  环球外汇行情中心显示，北京时间11:19，
+										澳元/美元报0.7848/49。
+							</Text>
+						</View>
+						<View style={{flex: 0.1,}}>
+							<Text style={{textAlign:'right',fontSize:setSpText(13),color:'rgb(128,128,128)',marginLeft:scaleSize(100),}}>2小时前        </Text>
+						</View>
+				</View>
+				
+				<View style={{flex: 0.1,backgroundColor:'#071C2D',}}>
+					<Image
+				  		style={{flex: 0.05, height:scaleSize(5),width:deviceWidth}}
+				  		source={Banner_Imgs.GUANGGAOPAGE_FENGEFU}
+					/>
+				
+						<Text style = {{flex: 0.95,fontSize:setSpText(20),color:'#F3D671',textAlign:'center',textAlignVertical:'center'}} onPress={() => Alert.alert('立即参与')}>
+					  		立即参与
+						</Text>
+			
+				</View>
+				
+			</View>
+		);
 	}
 
 	render() {
@@ -926,7 +1009,22 @@ class ForeignExchangeDetailView extends Component{
 	}
 	
 	renderPicturePage(){
-		return(<Text>renderPicturePage</Text>);
+		return(
+			<Swiper  style={styles.wrapper} 
+			smoothTransition
+  			loop
+			>
+				<View style={styles.slide1}>
+    				<Text style={styles.text}>Hello Swiper</Text>
+ 			 	</View>
+  				<View style={styles.slide2}>
+    				<Text style={styles.text}>Beautiful</Text>
+  				</View>
+  				<View style={styles.slide3}>
+    				<Text style={styles.text}>And simple</Text>
+  				</View>
+  			</Swiper>
+		);
 	}
 
 	renderDefault(){
@@ -935,6 +1033,7 @@ class ForeignExchangeDetailView extends Component{
 
 }
 
+//贴吧详情页面
 class ForumViewDetail extends Component{
 	_flatList;
 
@@ -1177,12 +1276,38 @@ const styles = StyleSheet.create({
 		width: scaleSize(52),
 		height: scaleSize(52),
 	},
+	wrapper: {
+    backgroundColor: '#009688',
+  },
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#e91e63',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#673ab7',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3f51b5',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
 });
 
 export {
 	TabNavigatorRoot,
 	RootTabNavigationBar,
-	ConsultationViewDetailView,
+	GuanggaoViewDetailView,
 	ForeignExchangeDetailView,
 	ForumViewDetail
 };

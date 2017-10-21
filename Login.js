@@ -13,10 +13,9 @@ import {
   TextInput,
   Image
 } from 'react-native';
-
+import Cookie from 'react-native-cookie';
 import t from 'tcomb-form-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import CookieManager from 'react-native-cookies';
 import {
   RequestUrl,
   Banner_Imgs,
@@ -52,7 +51,7 @@ var optionsForgetPassword = {};
 class Login extends Component {
   constructor(props) {
     super(props);
-
+    Cookie.set('http://bing.com/', 'foo', 'bar').then(() => console.log('success'));
     this.state = {
       visible: false,
     };
@@ -72,6 +71,8 @@ class Login extends Component {
     if (value) { // if validation fails, value will be null
       this.setState({
         visible: true,
+        name:'',
+        password:'',
       });
       // console.log('value.userName:' + value.userName);
       // console.log('value.password:' + value.password);
@@ -100,19 +101,6 @@ class Login extends Component {
         if (responseJson.success) {
           Alert.alert('登录成功！');
 
-
-          //       CookieManager.setFromResponse('http://bing.com/', 
-          // 'user_session=abcdefg; path=/; expires=Thu, 1 Jan 2030 00:00:00 -0000; secure; HttpOnly')
-          //   .then((res) => {
-          //     // `res` will be true or false depending on success.
-          //     console.log('CookieManager.setFromResponse =>', res);
-          //   });
-
-          //       CookieManager.get('http://bing.com/')
-          //       .then((res) => {
-          //           console.log('CookieManager.get =>', res); // => 'user_session=abcdefg; path=/;'
-          //       });
-
           navigation.goBack();
         } else {
           Alert.alert('登录失败！');
@@ -125,6 +113,7 @@ class Login extends Component {
   }
 
   render() {
+    Cookie.get('http://bing.com/', 'foo').then((cookie) => console.log(cookie));
     // const {
     //   navigate
     // } = this.props.navigation;
@@ -143,13 +132,33 @@ class Login extends Component {
           <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
             <Image
               style={{height:scaleSize(70),width:scaleSize(430)}}
-              source={Banner_Imgs.LOGINPAGE_ZHANGHAO}
-            />
+              source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      name:Text,
+                })} 
+                placeholder = "手机号码/用户名" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {false}
+              underlineColorAndroid = 'transparent'
+              
+              />
+            </Image>  
+
         
             <Image
               style={{height:scaleSize(70),width:scaleSize(430)}}
-              source={Banner_Imgs.LOGINPAGE_MIMA}
-            />
+              source={Banner_Imgs.LOGINPAGE_MIMA}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      password:Text,
+                })} 
+                placeholder = "密码" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {true}
+              underlineColorAndroid = 'transparent'
+              />
+            </Image> 
 
             <View style={{flexDirection:'row',marginBottom:scaleSize(30)}}>
                 <TouchableHighlight onPress = {() => Alert.alert()}>
@@ -211,33 +220,79 @@ class ForgetPasswordView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-      <Spinner visible = {this.state.visible} textContent = {'Loading...'} textStyle = {{color: '#FFF'}}/>
-
-      <Form
-        ref = "form"
-        type = {PersonForgetPassword}
-        options = {optionsForgetPassword}
-        />
-        <View  style = {{ flexDirection:'row',justifyContent:'space-between'}}>
-            <TextInput
-              style={{height: 40, width:250,borderColor: 'gray', borderWidth: 1}}
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}
+      <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+        source = {Banner_Imgs.LOGINPAGE_BG}>
+       <View style={{flex: 1,}}>
+      
+          <View style={{flex: 0.3,justifyContent:'center',alignItems:'center',marginTop:scaleSize(150)}}>
+            <Image
+              style={{height:scaleSize(224),width:scaleSize(187),}}
+              source={Banner_Imgs.LOGINPAGE_LOGO}
             />
+          </View>
 
-            <TouchableHighlight style = {[styles.button,{width:80}]} onPress = {this._onCodePress.bind(this)} underlayColor = '#99d9f4'>
-              <Text style={[styles.buttonText,{fontSize: 15,}]}>
-                获取验证码
-              </Text>
+          <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      name:Text,
+                })} 
+                placeholder = "手机号码/用户名" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {false}
+              underlineColorAndroid = 'transparent'
+              
+              />
+            </Image>  
+
+        
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_MIMA}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      password:Text,
+                })} 
+                placeholder = "密码" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {true}
+              underlineColorAndroid = 'transparent'
+              />
+            </Image> 
+
+            <View style={{flexDirection:'row',}}>
+               
+                   <TextInput  style={{width:scaleSize(250),height:scaleSize(70),fontSize:setSpText(11),}}  
+                       onChangeText={(text) => this.setState({
+                          yanzhenma:Text,
+                        })} 
+                        placeholder = "验证码" 
+                        placeholderTextColor  = 'gray'
+                        secureTextEntry  = {false}
+                            
+                    />
+                
+                <TouchableHighlight onPress = {() => Alert.alert('获取验证码')} style = {{marginTop:scaleSize(15)}}>
+                    <Text style={{height:scaleSize(70),fontSize:setSpText(13),color:'#E8DDCB',}}>
+                      获取验证码
+                    </Text>
+                </TouchableHighlight>
+            </View>
+
+            <TouchableHighlight
+              onPress={() => Alert.alert('提交注册')}>
+                <Image
+                  style={{height:scaleSize(72),width:scaleSize(420)}}
+                  source={Banner_Imgs.ZHUCEPAGE_BUTTON}
+                />
             </TouchableHighlight>
           </View>
-        <TouchableHighlight style = {styles.button} onPress = {this._onPress.bind(this)} underlayColor = '#99d9f4'>
-          <Text style={styles.buttonText}>
-            提交修改
-          </Text>
-        </TouchableHighlight>
-      </View>
+          <View style={{flex: 0.3,alignItems:'center',justifyContent:'flex-end',marginBottom:scaleSize(150)}}>
+          </View>
+       </View>
+      </Image>
     );
   }
 }
@@ -248,7 +303,9 @@ class RegisterView extends Component {
     super(props);
 
     this.state = {
-      text: '请输入验证码'
+      name:'',
+      password:'',
+      yanzhenma:'',
     };
   }
 
@@ -262,33 +319,79 @@ class RegisterView extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-      <Spinner visible = {this.state.visible} textContent = {'Loading...'} textStyle = {{color: '#FFF'}}/>
-
-      <Form
-        ref = "form"
-        type = {PersonRegister}
-        options = {optionsRegister}
-        />
-        <View  style = {{ flexDirection:'row',justifyContent:'space-between'}}>
-            <TextInput
-              style={{height: 40, width:250,borderColor: 'gray', borderWidth: 1}}
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}
+      <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+        source = {Banner_Imgs.LOGINPAGE_BG}>
+       <View style={{flex: 1,}}>
+      
+          <View style={{flex: 0.3,justifyContent:'center',alignItems:'center',marginTop:scaleSize(150)}}>
+            <Image
+              style={{height:scaleSize(224),width:scaleSize(187),}}
+              source={Banner_Imgs.LOGINPAGE_LOGO}
             />
+          </View>
 
-            <TouchableHighlight style = {[styles.button,{width:80}]} onPress = {this._onCodePress.bind(this)} underlayColor = '#99d9f4'>
-              <Text style={[styles.buttonText,{fontSize: 15,}]}>
-                获取验证码
-              </Text>
+          <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      name:Text,
+                })} 
+                placeholder = "手机号码/用户名" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {false}
+              underlineColorAndroid = 'transparent'
+              
+              />
+            </Image>  
+
+        
+            <Image
+              style={{height:scaleSize(70),width:scaleSize(430)}}
+              source={Banner_Imgs.LOGINPAGE_MIMA}>
+              <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
+                onChangeText={(text) => this.setState({
+                      password:Text,
+                })} 
+                placeholder = "密码" 
+                placeholderTextColor  = 'gray'
+              secureTextEntry  = {true}
+              underlineColorAndroid = 'transparent'
+              />
+            </Image> 
+
+            <View style={{flexDirection:'row',}}>
+               
+                   <TextInput  style={{width:scaleSize(250),height:scaleSize(70),fontSize:setSpText(11),}}  
+                       onChangeText={(text) => this.setState({
+                          yanzhenma:Text,
+                        })} 
+                        placeholder = "验证码" 
+                        placeholderTextColor  = 'gray'
+                        secureTextEntry  = {false}
+                            
+                    />
+                
+                <TouchableHighlight onPress = {() => Alert.alert('获取验证码')} style = {{marginTop:scaleSize(15)}}>
+                    <Text style={{height:scaleSize(70),fontSize:setSpText(13),color:'#E8DDCB',}}>
+                      获取验证码
+                    </Text>
+                </TouchableHighlight>
+            </View>
+
+            <TouchableHighlight
+              onPress={() => Alert.alert('提交注册')}>
+                <Image
+                  style={{height:scaleSize(72),width:scaleSize(420)}}
+                  source={Banner_Imgs.ZHUCEPAGE_BUTTON}
+                />
             </TouchableHighlight>
           </View>
-        <TouchableHighlight style = {styles.button} onPress = {this._onPress.bind(this)} underlayColor = '#99d9f4'>
-          <Text style={styles.buttonText}>
-            提交注册
-          </Text>
-        </TouchableHighlight>
-      </View>
+          <View style={{flex: 0.3,alignItems:'center',justifyContent:'flex-end',marginBottom:scaleSize(150)}}>
+          </View>
+       </View>
+      </Image>
     );
   }
 }

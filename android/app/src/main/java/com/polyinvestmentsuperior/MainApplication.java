@@ -3,7 +3,8 @@ package com.polyinvestmentsuperior;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.psykar.cookiemanager.CookieManagerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import im.shimo.react.cookie.CookieManagerPackage;
 import com.react.rnspinkit.RNSpinkitPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new CookieManagerPackage(),
             new RNSpinkitPackage(),
             new SplashScreenReactPackage()

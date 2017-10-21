@@ -31,13 +31,35 @@ const Banner_Imgs = {
 	LOGINPAGE_BUTTON:require('../Images/Login/LoginButton.png'),
 	LOGINPAGE_WIXIN:require('../Images/Login/LoginWixin.png'),
 	LOGINPAGE_WIXINFENGE:require('../Images/Login/WeixinFenge.png'),
+	ZHUCEPAGE_BUTTON:require('../Images/Login/ZhuceButton.png'),
+	GUANGGAOPAGE_BANNER:require('../Images/banner/GuanggaoBanner.png'),
+	GUANGGAOPAGE_FENGEFU:require('../Images/banner/GuanggaoFenge.png'),
+	CEBIANPAGE_MYICON:require('../Images/ICON/MyIcon.png'),
+	CEBIANPAGE_INFOMATION:require('../Images/ICON/Gerenziliao.png'),
+	CEBIANPAGE_SHARE:require('../Images/ICON/ShareIcon.png'),
+	CEBIANPAGE_ABOUTUS:require('../Images/ICON/AboutUsIcon.png'),
+	CEBIANPAGE_BACKFORM:require('../Images/ICON/CeForm.png'),
+	INFORMATION_NICKNAMEICON:require('../Images/Information/NicknameIcon.png'),
+	INFORMATION_BIRTHDAYICON:require('../Images/Information/BirthdayIcon.png'),
+	INFORMATION_GENDERICON:require('../Images/Information/GenderIcon.png'),
+	INFORMATION_TELEPHONEICON:require('../Images/Information/TelephoneIcon.png'),
+	INFORMATION_MAILBOXICON:require('../Images/Information/MailboxIcon.png'),
+	INFORMATION_SUBMITBUTTON:require('../Images/Information/SubmitButton.png'),
+	INFORMATION_BGFORM:require('../Images/Information/BGForm.png'),
+	POPPAGE_CONFIRMINTEGRALTURNBUTTON: require('../Images/Information/ConfirmIntegralTurnButton.png'),
 
 	linshi_niurenbang:require('../Images/banner/Llinshi.png'),
 };
+
+const Constants = {
+	TOAST_SHORT:1,
+	TOAST_LONG:2,
+}
 
 
 
 export {
 	RequestUrl,
-	Banner_Imgs
+	Banner_Imgs,
+	Constants
 };
