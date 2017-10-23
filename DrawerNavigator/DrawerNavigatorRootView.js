@@ -15,7 +15,8 @@ import {
 import {
 	scaleSize,
 	setSpText,
-	deviceWidth
+	deviceWidth,
+	deviceHeight
 } from '../Public/ScreenAdaptationUtil.js';
 import {
   RequestUrl,
@@ -39,14 +40,14 @@ class DrawerNavigatorInformationView extends Component {
 		const{navigation} = this.props;
 		return (
 			<View style={{flex: 1,backgroundColor:'#071C2D'}}>
-				<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),backgroundColor:'#000000'}}>
-						<Text style = {{fontSize:setSpText(15), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
-						<Text style = {{fontSize:setSpText(20), color:'#F3D671',}}>个人信息         </Text>
+				<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),backgroundColor:'#071C2D'}}>
+						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
+						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>个人信息         </Text>
 						<Text></Text>
 				</View>
-				<View style={{flex: 0.4,}}>
-					<View style={{flex: 0.2,height:scaleSize(84),}}>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+				<View style={{flex: 0.45,}}>
+					<View style={{flex: 0.2,}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 							<Image
 						  		style={{height:scaleSize(2)}}
 						  		source={Banner_Imgs.INFORMATION_BGFORM}
@@ -54,9 +55,9 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 						<View style={{alignItems:'center',flexDirection:'row'}}>
 							<Image
-              					style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(30)}}
+              					style={{height:scaleSize(50),width:scaleSize(50),marginLeft:scaleSize(30)}}
               					source={Banner_Imgs.INFORMATION_NICKNAMEICON} />
-             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(13),color:'#F3D671'}}  
+             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                					onChangeText={(text) => this.setState({
                       			password:Text,
                 				})} 
@@ -68,7 +69,7 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 					</View>
 					<View style={{flex: 0.2,}}>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 							<Image
 						  		style={{height:scaleSize(2)}}
 						  		source={Banner_Imgs.INFORMATION_BGFORM}
@@ -76,9 +77,9 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 						<View style={{alignItems:'center',flexDirection:'row'}}>
 							<Image
-              					style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(30)}}
+              					style={{height:scaleSize(50),width:scaleSize(50),marginLeft:scaleSize(30)}}
               					source={Banner_Imgs.INFORMATION_BIRTHDAYICON} />
-             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(13),color:'#F3D671'}}  
+             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                					onChangeText={(text) => this.setState({
                       			password:Text,
                 				})} 
@@ -90,7 +91,7 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 					</View>
 					<View style={{flex: 0.2,}}>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 							<Image
 						  		style={{height:scaleSize(2)}}
 						  		source={Banner_Imgs.INFORMATION_BGFORM}
@@ -98,9 +99,9 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 						<View style={{alignItems:'center',flexDirection:'row'}}>
 							<Image
-              					style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(30)}}
+              					style={{height:scaleSize(50),width:scaleSize(50),marginLeft:scaleSize(30)}}
               					source={Banner_Imgs.INFORMATION_GENDERICON} />
-             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(13),color:'#F3D671'}}  
+             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                					onChangeText={(text) => this.setState({
                       			password:Text,
                 				})} 
@@ -112,7 +113,7 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 					</View>
 					<View style={{flex: 0.2,}}>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 							<Image
 						  		style={{height:scaleSize(2)}}
 						  		source={Banner_Imgs.INFORMATION_BGFORM}
@@ -120,9 +121,9 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 						<View style={{alignItems:'center',flexDirection:'row'}}>
 							<Image
-              					style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(30)}}
+              					style={{height:scaleSize(50),width:scaleSize(50),marginLeft:scaleSize(30)}}
               					source={Banner_Imgs.INFORMATION_TELEPHONEICON} />
-             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(13),color:'#F3D671'}}  
+             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                					onChangeText={(text) => this.setState({
                       			password:Text,
                 				})} 
@@ -134,7 +135,7 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 					</View>
 					<View style={{flex: 0.2,}}>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 							<Image
 						  		style={{height:scaleSize(2)}}
 						  		source={Banner_Imgs.INFORMATION_BGFORM}
@@ -142,9 +143,9 @@ class DrawerNavigatorInformationView extends Component {
 						</View>
 						<View style={{alignItems:'center',flexDirection:'row'}}>
 							<Image
-              					style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(30)}}
+              					style={{height:scaleSize(50),width:scaleSize(50),marginLeft:scaleSize(30)}}
               					source={Banner_Imgs.INFORMATION_MAILBOXICON} />
-             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(13),color:'#F3D671'}}  
+             			 	<TextInput  style={{marginLeft:scaleSize(30),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                					onChangeText={(text) => this.setState({
                       			password:Text,
                 				})} 
@@ -154,7 +155,7 @@ class DrawerNavigatorInformationView extends Component {
               					underlineColorAndroid = 'transparent'
               				/>
 						</View>
-						<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+						<View style = {{backgroundColor:'rgb(34,52,67)',opacity:0.5}}>
 								<Image
 						  			style={{height:scaleSize(2)}}
 						  			source={Banner_Imgs.INFORMATION_BGFORM}
@@ -166,7 +167,7 @@ class DrawerNavigatorInformationView extends Component {
 					<TouchableHighlight   onPress={() => {
 						ToastShow('提交成功',Constants.TOAST_LONG);
 					}}>
-                		<Image  style={{height:scaleSize(72),width:scaleSize(420),}}
+                		<Image  style={{height:scaleSize(100),width:scaleSize(450),}}
                   		source={Banner_Imgs.INFORMATION_SUBMITBUTTON}/>
             		</TouchableHighlight>
 				</View>
@@ -200,8 +201,20 @@ class DrawerAboutUsView extends Component {
 	});
 
 	render() {
+		const{navigation} = this.props;
 		return (
-			<Text>DrawerAboutUsView</Text>
+			<View style={{flex: 1,alignItems:'center',justifyContent:'center'}}>
+			<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),width:deviceWidth,backgroundColor:'#071C2D'}}>
+						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
+						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>关于我们         </Text>
+						<Text></Text>
+				</View>
+				<Image
+				  style={{flex: 1,height:deviceHeight,width:deviceWidth}}
+				  source={Banner_Imgs.ABOUTUS_BG}
+				/>
+				
+			</View>
 		);
 	}
 }

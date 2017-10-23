@@ -73,70 +73,88 @@ const RootDrawerNavigator = DrawerNavigator({
 	                       <View style={{flex: 0.5,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
 								<View style={{flex: 0.4,}}>
 									<Image
-									  style={{height:scaleSize(125),width:scaleSize(125),marginLeft:scaleSize(60)}}
+									  style={{height:scaleSize(150),width:scaleSize(150),marginLeft:scaleSize(40)}}
 									  source={Banner_Imgs.CEBIANPAGE_MYICON}
 									/>
 								</View>
 								<View style={{flex: 0.6,}}>
-									<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(15),color:'rgb(252,252,253)'}}>
+									<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(12),color:'#F3D671'}}>
 									 	陈建辉
 									</Text>
-									<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(13),color:'rgba(252,252,253,0.63)'}}>
+									<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(9),color:'rgb(252,252,253)'}}>
 									  	生命不息，奋斗不止。
 									</Text>
 								</View>
 	                       </View>
 	                       <View style={{flex: 0.5,}}>
 	                       		<View style={{flex: 0.3,}}>
-	                       		  <TouchableHighlight onPress = {() => props.navigation.navigate('Information')}>
-	                       			<Image
-	                       			  style={{height:scaleSize(80),width:deviceWidth - scaleSize(200)}}
-	                       			  source={Banner_Imgs.CEBIANPAGE_BACKFORM}>
+	                       		  <View style = {{backgroundColor:'rgb(34,52,67)'}}>
+									<Image
+						  			style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
+						  			source={Banner_Imgs.INFORMATION_BGFORM}
+									/>
+								 </View>
+	                       		  <TouchableHighlight onPress = {() => props.navigation.navigate('Information')} style = {{flex: 1,}}>
+	                       		
 	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
 	                       				<Image
-	                       				  style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(25)}}
+	                       				  style={{height:scaleSize(38),width:scaleSize(38),marginLeft:scaleSize(25)}}
 	                       				  source={Banner_Imgs.CEBIANPAGE_INFOMATION}
 	                       				/>
-	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(15),color:'rgb(252,252,253)',marginLeft:scaleSize(25)}}>
+	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(11),color:'#F3D671',marginLeft:scaleSize(25)}}>
 	                       				  个人信息（完善）
 	                       				</Text>
 	                       				</View>
-	                       			</Image>
+	                       			
 	                       			</TouchableHighlight>
 	                       		</View>
 	                       		<View style={{flex: 0.3,}}>
-	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('Share')}>
-	                       			<Image
-	                       			  style={{height:scaleSize(80),width:deviceWidth - scaleSize(200)}}
-	                       			  source={Banner_Imgs.CEBIANPAGE_BACKFORM}>
+	                       			<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+										<Image
+						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
+						  				source={Banner_Imgs.INFORMATION_BGFORM}
+										/>
+								 	</View>
+	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('Share')} style = {{flex: 1,}}>
+	                       		
 	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
 	                       				<Image
-	                       				  style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(25)}}
+	                       				  style={{height:scaleSize(38),width:scaleSize(38),marginLeft:scaleSize(25)}}
 	                       				  source={Banner_Imgs.CEBIANPAGE_SHARE}
 	                       				/>
-	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(15),color:'rgb(252,252,253)',marginLeft:scaleSize(25)}}>
+	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(11),color:'#F3D671',marginLeft:scaleSize(25)}}>
 	                       				  分享
 	                       				</Text>
 	                       				</View>
-	                       			</Image>
+	                       			
 	                       			</TouchableHighlight>
 	                       		</View>
 	                       		<View style={{flex: 0.3,}}>
-	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('AboutUs')}>
-	                       			<Image
-	                       			  style={{height:scaleSize(80),width:deviceWidth - scaleSize(200)}}
-	                       			  source={Banner_Imgs.CEBIANPAGE_BACKFORM}>
+	                       			 <View style = {{backgroundColor:'rgb(34,52,67)'}}>
+										<Image
+						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
+						  				source={Banner_Imgs.INFORMATION_BGFORM}
+										/>
+								 	 </View>
+	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('AboutUs')} style = {{flex: 1,}}>
+	                       		
 	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
 	                       				<Image
-	                       				  style={{height:scaleSize(32),width:scaleSize(32),marginLeft:scaleSize(25)}}
+	                       				  style={{height:scaleSize(38),width:scaleSize(38),marginLeft:scaleSize(25)}}
 	                       				  source={Banner_Imgs.CEBIANPAGE_ABOUTUS}
 	                       				/>
-	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(15),color:'rgb(252,252,253)',marginLeft:scaleSize(25)}}>
+	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(11),color:'#F3D671',marginLeft:scaleSize(25)}}>
 	                       				  关于我们
 	                       				</Text>
 	                       				</View>
-	                       			</Image>
+	                       			
 	                       			</TouchableHighlight>
+	                       			<View style = {{backgroundColor:'rgb(34,52,67)'}}>
+										<Image
+						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
+						  				source={Banner_Imgs.INFORMATION_BGFORM}
+										/>
+								 	</View>
 	                       		</View>
 	                       		
 	                       </View>
@@ -210,7 +228,8 @@ export default class App extends Component {
 		return (
 
 			<RootStackNavigator />
-			
+
+			// <RegisterView />
 			// <ForgetPasswordView />
 			//<ForgetPasswordView />
 			//<RootTabNavigationBar />

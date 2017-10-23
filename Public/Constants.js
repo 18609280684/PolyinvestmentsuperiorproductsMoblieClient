@@ -2,6 +2,8 @@ const RequestUrl = {
 	MAINPAGEVIEW_URL: 'http://47.94.157.124:8080/indexAdvertisement/appIndex?customerId=2c91810d5ec4369d015ec43707490000',
 	MAINPAGEDETAIL_URL: 'http://47.94.157.124:8080/indexAdvertisement/indexDetailed',
 	LOGIN_URL: 'http://47.94.157.124:8080/customer/login',
+	REGISTER_URL:'http://47.94.157.124:8080/customer/saveCustomer',
+	INTEGRAL_URL:'http://47.94.157.124:8080/indexAdvertisement/turnOut',
 };
 
 const Banner_Imgs = {
@@ -47,6 +49,13 @@ const Banner_Imgs = {
 	INFORMATION_SUBMITBUTTON:require('../Images/Information/SubmitButton.png'),
 	INFORMATION_BGFORM:require('../Images/Information/BGForm.png'),
 	POPPAGE_CONFIRMINTEGRALTURNBUTTON: require('../Images/Information/ConfirmIntegralTurnButton.png'),
+	XINSHOUPAGE_BUTTON:require('../Images/Information/XinshouTouzi.png'),
+	DINGQIPAGE_BUTTON:require('../Images/Information/Dingqi.png'),
+	GUANGGAOPAGE_BG01:require('../Images/Information/Guanggao01.png'),
+	GUANGGAOPAGE_BG02:require('../Images/Information/Guanggao02.png'),
+	GUANGGAOPAGE_BG03:require('../Images/Information/Guanggao03.png'),
+	ABOUTUS_BG:require('../Images/Information/Guanggao04.png'),
+	
 
 	linshi_niurenbang:require('../Images/banner/Llinshi.png'),
 };

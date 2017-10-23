@@ -19,7 +19,13 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {
   RequestUrl,
   Banner_Imgs,
+  Constants
 } from './Public/Constants.js';
+import {
+  renderLoadingView,
+  renderErrorView,
+  ToastShow
+} from './Public/Utils.js';
 import {
   scaleSize,
   setSpText,
@@ -28,32 +34,35 @@ import {
 
 
 
-var Form = t.form.Form;
-var Person = t.struct({
-  用户名: t.String,
-  密码: t.Number,
-});
-var options = {};
+// var Form = t.form.Form;
+// var Person = t.struct({
+//   用户名: t.String,
+//   密码: t.Number,
+// });
+// var options = {};
 
-var PersonRegister = t.struct({
-  用户名: t.String,
-  密码: t.Number,
-});
-var optionsRegister = {};
+// var PersonRegister = t.struct({
+//   用户名: t.String,
+//   密码: t.Number,
+// });
+// var optionsRegister = {};
 
-var PersonForgetPassword = t.struct({
-  用户名: t.String,
-  新密码: t.Number,
-});
-var optionsForgetPassword = {};
+// var PersonForgetPassword = t.struct({
+//   用户名: t.String,
+//   新密码: t.Number,
+// });
+// var optionsForgetPassword = {};
 
 //登录页面
 class Login extends Component {
   constructor(props) {
     super(props);
-    Cookie.set('http://bing.com/', 'foo', 'bar').then(() => console.log('success'));
+    this.name = '';
+    this.password = '';
     this.state = {
-      visible: false,
+      isLoading: false,
+      error: false,
+      errorInfo: "",
     };
   }
 
@@ -64,61 +73,69 @@ class Login extends Component {
   });
 
   _onPress() {
-    var value = this.refs.form.getValue();
-    const {
-      navigation
-    } = this.props;
-    if (value) { // if validation fails, value will be null
-      this.setState({
-        visible: true,
-        name:'',
-        password:'',
-      });
-      // console.log('value.userName:' + value.userName);
-      // console.log('value.password:' + value.password);
-      this.fetchLoginData(value, navigation);
-    } else {
-      Alert.alert('用户名或密码格式不对！请重新输入');
+    if (this.name != ''  && this.name != null && this.password != null && this.password != '') {
+        this.setState({
+          isLoading:true,
+        });
+        this.fetchLoginData();
+    }else
+    {
+       ToastShow('用户名或密码不能为空',Constants.TOAST_SHORT);
     }
   }
 
-  fetchLoginData(value, navigation) {
+  fetchLoginData() {
     //Alert.alert('开始请求数据');
+    const{navigation} = this.props;
     fetch(
         RequestUrl.LOGIN_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: 'customerCode=' + value.用户名 + '&' + 'password=' + value.密码
+          body: 'customerCode=' + this.name + '&' + 'password=' + this.password
         })
       .then((response) => response.json())
       .then((responseJson) => {
+        this.name = '';
+        this.password = '';
         this.setState({
-          visible: false,
+          isLoading: false,
         });
         console.log(responseJson);
         if (responseJson.success) {
-          Alert.alert('登录成功！');
+          // Cookie.clear();
+          Cookie.set(RequestUrl.LOGIN_URL, 'customerId',responseJson.message.customerId).then(() => console.log('customerId'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'customerName',responseJson.message.customerName).then(() => console.log('customerName'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'customerCode',responseJson.message.customerCode).then(() => console.log('customerCode'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'createDate',responseJson.message.createDate).then(() => console.log('createDate'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'integral',responseJson.message.integral).then(() => console.log('integral'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'dateBirth',responseJson.message.dateBirth).then(() => console.log('dateBirth'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'sex',responseJson.message.sex).then(() => console.log('sex'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'telephone',responseJson.message.telephone).then(() => console.log('telephone'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'email',responseJson.message.email).then(() => console.log('email'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'autograph',responseJson.message.explain).then(() => console.log('autograph'));
 
-          navigation.goBack();
+          ToastShow('登录成功！',Constants.TOAST_SHORT);
+          // navigation.goBack();
         } else {
-          Alert.alert('登录失败！');
+          ToastShow('登录失败,账户名或密码不对！',Constants.TOAST_SHORT);
         }
       })
       .catch((error) => {
+        ToastShow(error,Constants.TOAST_SHORT);
         console.error(error);
         Alert.alert(error);
+        this.setState({
+          error: true,
+          errorInfo: error,
+        });
       });
   }
 
-  render() {
-    Cookie.get('http://bing.com/', 'foo').then((cookie) => console.log(cookie));
-    // const {
-    //   navigate
-    // } = this.props.navigation;
-    return (
-      <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+  renderData(){
+    return(
+        <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
         source = {Banner_Imgs.LOGINPAGE_BG}>
        <View style={{flex: 1,}}>
       
@@ -134,13 +151,11 @@ class Login extends Component {
               style={{height:scaleSize(70),width:scaleSize(430)}}
               source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
-                onChangeText={(text) => this.setState({
-                      name:Text,
-                })} 
+                onChangeText={(text) => this.name = text} 
                 placeholder = "手机号码/用户名" 
                 placeholderTextColor  = 'gray'
-              secureTextEntry  = {false}
-              underlineColorAndroid = 'transparent'
+                secureTextEntry  = {false}
+                underlineColorAndroid = 'transparent'
               
               />
             </Image>  
@@ -150,9 +165,7 @@ class Login extends Component {
               style={{height:scaleSize(70),width:scaleSize(430)}}
               source={Banner_Imgs.LOGINPAGE_MIMA}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
-                onChangeText={(text) => this.setState({
-                      password:Text,
-                })} 
+                onChangeText={(text) => this.password = text} 
                 placeholder = "密码" 
                 placeholderTextColor  = 'gray'
               secureTextEntry  = {true}
@@ -174,7 +187,7 @@ class Login extends Component {
             </View>
 
             <TouchableHighlight
-              onPress={() => Alert.alert('提交')}>
+              onPress={() => this._onPress()}>
                 <Image
                   style={{height:scaleSize(72),width:scaleSize(420)}}
                   source={Banner_Imgs.LOGINPAGE_BUTTON}
@@ -196,7 +209,19 @@ class Login extends Component {
           </View>
        </View>
       </Image>
-    );
+      );
+  }
+
+  render() {
+
+    if (this.state.isLoading && !this.state.error) {
+      return renderLoadingView();
+
+    } else if (this.state.error) {
+      return renderErrorView(this.state.errorInfo);
+    }
+
+    return this.renderData();
   }
 }
 
@@ -218,7 +243,7 @@ class ForgetPasswordView extends Component {
 
   }
 
-  render() {
+  renderData(){
     return (
       <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
         source = {Banner_Imgs.LOGINPAGE_BG}>
@@ -294,6 +319,20 @@ class ForgetPasswordView extends Component {
        </View>
       </Image>
     );
+  }
+
+  render() {
+
+      if (this.state.isLoading && !this.state.error) {
+      return renderLoadingView();
+
+    } else if (this.state.error) {
+      return renderErrorView(this.state.errorInfo);
+    }
+
+    return this.renderData();
+
+    
   }
 }
 
@@ -301,23 +340,71 @@ class ForgetPasswordView extends Component {
 class RegisterView extends Component {
   constructor(props) {
     super(props);
-
+    this.Username = '';
+    this.password = '';
+    this.yanzhenma = '';
     this.state = {
-      name:'',
-      password:'',
-      yanzhenma:'',
+      isLoading: false,
+      error: false,
+      errorInfo: "",
     };
   }
 
-  _onPress() {
+    _onPress() {
+      console.log('this.Username:' +this.Username);
+    if (this.Username != ''  && this.Username != null && this.password != null && this.password != '') {
+        this.setState({
+          isLoading:true,
+        });
+        this.fetchLoginData();
+    }else
+    {
+       ToastShow('用户名或密码不能为空',Constants.TOAST_SHORT);
+    }
+  }
 
+  fetchLoginData() {
+    // const{navigate} = this.props.navigation;
+    fetch(
+        RequestUrl.REGISTER_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'customerCode=' + this.Username + '&' + 'password=' + this.password
+        })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.Username = '';
+        this.password = '';
+        this.yanzhenma = '';
+        this.setState({
+          isLoading: false,
+        });
+        console.log(responseJson);
+        if (responseJson.success) {
+          // navigate('Login');
+          ToastShow('注册成功！',Constants.TOAST_SHORT);
+        } else {
+          ToastShow('注册失败,账户名或密码不对！',Constants.TOAST_SHORT);
+        }
+      })
+      .catch((error) => {
+        // ToastShow(error,Constants.TOAST_SHORT);
+        console.error(error);
+        Alert.alert(error);
+        this.setState({
+          error: true,
+          errorInfo: error,
+        });
+      });
   }
 
   _onCodePress() {
 
   }
 
-  render() {
+  renderData(){
     return (
       <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
         source = {Banner_Imgs.LOGINPAGE_BG}>
@@ -335,9 +422,7 @@ class RegisterView extends Component {
               style={{height:scaleSize(70),width:scaleSize(430)}}
               source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
-                onChangeText={(text) => this.setState({
-                      name:Text,
-                })} 
+                onChangeText={(text) => this.Username = text} 
                 placeholder = "手机号码/用户名" 
                 placeholderTextColor  = 'gray'
               secureTextEntry  = {false}
@@ -351,9 +436,7 @@ class RegisterView extends Component {
               style={{height:scaleSize(70),width:scaleSize(430)}}
               source={Banner_Imgs.LOGINPAGE_MIMA}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
-                onChangeText={(text) => this.setState({
-                      password:Text,
-                })} 
+                onChangeText={(text) => this.password = text} 
                 placeholder = "密码" 
                 placeholderTextColor  = 'gray'
               secureTextEntry  = {true}
@@ -364,9 +447,7 @@ class RegisterView extends Component {
             <View style={{flexDirection:'row',}}>
                
                    <TextInput  style={{width:scaleSize(250),height:scaleSize(70),fontSize:setSpText(11),}}  
-                       onChangeText={(text) => this.setState({
-                          yanzhenma:Text,
-                        })} 
+                       onChangeText={(text) => this.yanzhenma = text} 
                         placeholder = "验证码" 
                         placeholderTextColor  = 'gray'
                         secureTextEntry  = {false}
@@ -381,7 +462,7 @@ class RegisterView extends Component {
             </View>
 
             <TouchableHighlight
-              onPress={() => Alert.alert('提交注册')}>
+              onPress={() => this._onPress()}>
                 <Image
                   style={{height:scaleSize(72),width:scaleSize(420)}}
                   source={Banner_Imgs.ZHUCEPAGE_BUTTON}
@@ -393,6 +474,20 @@ class RegisterView extends Component {
        </View>
       </Image>
     );
+  }
+
+  render() {
+
+    if (this.state.isLoading && !this.state.error) {
+      return renderLoadingView();
+
+    } else if (this.state.error) {
+      return renderErrorView(this.state.errorInfo);
+    }
+
+    return this.renderData();
+
+    
   }
 }
 
