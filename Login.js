@@ -11,7 +11,8 @@ import {
   TouchableHighlight,
   Alert,
   TextInput,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import Cookie from 'react-native-cookie';
 import t from 'tcomb-form-native';
@@ -29,7 +30,8 @@ import {
 import {
   scaleSize,
   setSpText,
-  deviceWidth
+  deviceWidth,
+  deviceHeight
 } from './Public/ScreenAdaptationUtil.js';
 
 
@@ -115,9 +117,13 @@ class Login extends Component {
           Cookie.set(RequestUrl.LOGIN_URL, 'telephone',responseJson.message.telephone).then(() => console.log('telephone'));
           Cookie.set(RequestUrl.LOGIN_URL, 'email',responseJson.message.email).then(() => console.log('email'));
           Cookie.set(RequestUrl.LOGIN_URL, 'autograph',responseJson.message.explain).then(() => console.log('autograph'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'pinCode',responseJson.message.explain).then(() => console.log('pinCode'));
+          Cookie.set(RequestUrl.LOGIN_URL, 'bankCardNumber',responseJson.message.explain).then(() => console.log('bankCardNumber'));
+
+
 
           ToastShow('登录成功！',Constants.TOAST_SHORT);
-          // navigation.goBack();
+           navigation.navigate('Home');
         } else {
           ToastShow('登录失败,账户名或密码不对！',Constants.TOAST_SHORT);
         }
@@ -134,8 +140,16 @@ class Login extends Component {
   }
 
   renderData(){
+    // const{navigate} = this.props.navigation;
+    var _scrollView: ScrollView;
     return(
-        <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+      <ScrollView
+        ref={(scrollView) => { _scrollView = scrollView; }}
+        automaticallyAdjustContentInsets={true}
+        onScroll={() => { console.log('onScroll!'); }}
+        style = {{height:deviceHeight}}
+        >
+        <Image style = {{flex: 1,height:deviceHeight,width:deviceWidth,backgroundColor:'rgba(0,0,0,0)'}}
         source = {Banner_Imgs.LOGINPAGE_BG}>
        <View style={{flex: 1,}}>
       
@@ -156,7 +170,7 @@ class Login extends Component {
                 placeholderTextColor  = 'gray'
                 secureTextEntry  = {false}
                 underlineColorAndroid = 'transparent'
-              
+                
               />
             </Image>  
 
@@ -165,21 +179,25 @@ class Login extends Component {
               style={{height:scaleSize(70),width:scaleSize(430)}}
               source={Banner_Imgs.LOGINPAGE_MIMA}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
-                onChangeText={(text) => this.password = text} 
+                onChangeText={(text) => {
+                  this.password = text;
+                  
+                }} 
                 placeholder = "密码" 
                 placeholderTextColor  = 'gray'
               secureTextEntry  = {true}
               underlineColorAndroid = 'transparent'
+
               />
             </Image> 
 
             <View style={{flexDirection:'row',marginBottom:scaleSize(30)}}>
-                <TouchableHighlight onPress = {() => Alert.alert()}>
+                <TouchableHighlight onPress = {() => navigate('RegisterView')}>
                     <Text style={{fontSize:setSpText(13),color:'rgb(156,154,143)'}}>注册用户</Text>
                 </TouchableHighlight>
                   <View style={{width:scaleSize(200)}}>
                   </View>
-                <TouchableHighlight onPress = {() => Alert.alert()}>
+                <TouchableHighlight onPress = {() => Alert.alert('请联系客服确认身份后修改密码')}>
                     <Text style={{fontSize:setSpText(13),color:'rgb(156,154,143)'}}>
                       忘记密码
                     </Text>
@@ -209,6 +227,7 @@ class Login extends Component {
           </View>
        </View>
       </Image>
+      </ScrollView>
       );
   }
 
@@ -352,7 +371,7 @@ class RegisterView extends Component {
 
     _onPress() {
       console.log('this.Username:' +this.Username);
-    if (this.Username != ''  && this.Username != null && this.password != null && this.password != '') {
+    if (this.Username != ''  && this.Username != null && this.password != null && this.password != '' ) {
         this.setState({
           isLoading:true,
         });
@@ -364,7 +383,7 @@ class RegisterView extends Component {
   }
 
   fetchLoginData() {
-    // const{navigate} = this.props.navigation;
+     const{navigate} = this.props.navigation;
     fetch(
         RequestUrl.REGISTER_URL, {
           method: 'POST',
@@ -383,7 +402,7 @@ class RegisterView extends Component {
         });
         console.log(responseJson);
         if (responseJson.success) {
-          // navigate('Login');
+           navigate('Login');
           ToastShow('注册成功！',Constants.TOAST_SHORT);
         } else {
           ToastShow('注册失败,账户名或密码不对！',Constants.TOAST_SHORT);
@@ -405,8 +424,16 @@ class RegisterView extends Component {
   }
 
   renderData(){
+    var _scrollView: ScrollView;
     return (
-      <Image style = {{flex: 1,height:null,width:null,backgroundColor:'rgba(0,0,0,0)'}}
+    <ScrollView
+        ref={(scrollView) => { _scrollView = scrollView; }}
+        automaticallyAdjustContentInsets={true}
+        onScroll={() => { console.log('onScroll!'); }}
+        style = {{height:deviceHeight}}
+        >
+
+      <Image style = {{flex: 1,height:deviceHeight,width:null,backgroundColor:'rgba(0,0,0,0)'}}
         source = {Banner_Imgs.LOGINPAGE_BG}>
        <View style={{flex: 1,}}>
       
@@ -473,6 +500,7 @@ class RegisterView extends Component {
           </View>
        </View>
       </Image>
+      </ScrollView>
     );
   }
 

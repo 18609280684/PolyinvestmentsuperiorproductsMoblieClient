@@ -41,9 +41,11 @@ import PopupDialog,{
 	SlideAnimation  
 } from 'react-native-popup-dialog';
 import Cookie from 'react-native-cookie';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 var ITEM_HEIGHT = 400;
+var cookieCustomerId = '';
 
 class ConsultationView extends Component {
 
@@ -76,7 +78,6 @@ class ConsultationView extends Component {
 
 	constructor(props) {
 		super(props);
-		
 		this.integral = 0;
 		this.platform = 0;
 		this.state = {
@@ -84,23 +85,51 @@ class ConsultationView extends Component {
 			isLoading: true,
 			error: false,
 			errorInfo: "",
+			integrals:'',
 		};
+
 	}
 
 	componentDidMount() {
-		this.fetchData();
+		Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => {
+			console.log('customerId:' + cookie);
+			cookieCustomerId = cookie;
+			this.fetchData();
+		});
+
+		// Cookie.get(RequestUrl.LOGIN_URL, 'customerName').then((cookie) => {
+		// 	console.log('customerName:' + cookie);
+		// 	global.constants.nickName = cookie;
+			
+		// });
+
+		// Cookie.get(RequestUrl.LOGIN_URL, 'autograph').then((cookie) => {
+		// 	console.log('autograph:' + cookie);
+		// 	global.constants.signature = cookie;
+		// });
+				
+			
+		
 	}
 
 
 
 	fetchData() {
-		fetch(RequestUrl.MAINPAGEVIEW_URL)
+		fetch(RequestUrl.MAINPAGEVIEW_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'customerId=' + cookieCustomerId
+        })
 			.then((response) => response.json())
 			.then((responseData) => {
 				this.setState({
 					data: responseData.index,
+					integrals:responseData.integral,
 					isLoading: false,
 				});
+				ToastShow('获取数据成功',Constants.TOAST_SHORT);
 			})
 			.catch((error) => {
 				this.setState({
@@ -127,7 +156,7 @@ class ConsultationView extends Component {
 								/>
 						</TouchableHighlight>
 						<Text style = {{fontFamily:'PingFang-SC-Light',fontSize:setSpText(18), color:'rgb(243,214,113)',marginLeft:scaleSize(20)}}>
-							1500
+							{this.state.integrals}
 						</Text>
 						<Text style = {{fontFamily:'PingFang-SC-Light',fontSize:setSpText(10), color:'rgb(255,255,255)',marginLeft:scaleSize(20),marginTop:scaleSize(20)}}>
 						   积分
@@ -143,35 +172,40 @@ class ConsultationView extends Component {
 
 					<View style={{flexDirection:'row',height:scaleSize(155), backgroundColor:'rgb(15,36,53)'}}>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => {
+						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
 							this.popupDialog.show();
 							this.platform = 1;
 							// this.fetchIntegralData(1);
 						}}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Image
-							  	style={{width:scaleSize(58),height:scaleSize(58),}}
-							  	source={Banner_Imgs.MAINPAGEVIEW_TOPICON}
-								/>
+								<Icon name = 'gift' size = {scaleSize(64)} color = '#F3D671'/>
+								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>积分互转</Text>
+							</View>
+						</TouchableHighlight>
+
+						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
+							this.popupDialog.show();
+							this.platform = 1;
+							// this.fetchIntegralData(1);
+						}}>
+							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
+								<Icon name = 'github-alt' size = {scaleSize(64)} color = '#F3D671'/>
 								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台一</Text>
 							</View>
 						</TouchableHighlight>
 						
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => {
+						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
 							this.popupDialog.show();
 							this.platform = 2;
 							// this.fetchIntegralData(2);
 						}}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Image
-							  	style={{width:scaleSize(58),height:scaleSize(58),}}
-							  	source={Banner_Imgs.MAINPAGEVIEW_TOPICON}
-								/>
+								<Icon name = 'github-alt' size = {scaleSize(64)} color = '#F3D671'/>
 								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台二</Text>
 							</View>
 						</TouchableHighlight>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => {
+						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
 							this.popupDialog.show();
 							this.platform = 3;
 							// this.fetchIntegralData(3);
@@ -185,7 +219,7 @@ class ConsultationView extends Component {
 							</View>
 						</TouchableHighlight>
 
-						<TouchableHighlight style = {{flex: 0.25,}} onPress = {() => {
+						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
 							this.popupDialog.show();
 							this.platform = 4;
 							// this.fetchIntegralData(4);
@@ -271,7 +305,7 @@ class ConsultationView extends Component {
       					  MT4平台
       					</Text>
       					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
-      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    15000分</Text>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
       						
       						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
       						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
@@ -1063,9 +1097,13 @@ class ForeignExchangeDetailView extends Component{
 						return this.renderNiuRenBang();
 					break;
 				case '2':
-				case '3':
-				case '4':
 						return this.renderPicturePage();
+					break;
+				case '3':
+						return this.renderPingtaijieshao();
+						break;
+				case '4':
+						return this.renderPingzhonggenxin();
 					break;
 				default:
 						return this.renderDefault();
@@ -1108,18 +1146,22 @@ class ForeignExchangeDetailView extends Component{
 	}
 	
 	renderPicturePage(){
+		const{navigation} = this.props;
 		return(
-
-			<Swiper  style={styles.wrapper} 
-			smoothTransition
-  			loop
-			>
-				<View style={styles.slide1}>
-				<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),width:deviceWidth,backgroundColor:'#071C2D'}}>
+			<View style = {{flex: 1,backgroundColor:'#071C2D'}}>
+			<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),width:deviceWidth,backgroundColor:'#071C2D'}}>
 						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
-						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>关于我们         </Text>
+						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>资金安全         </Text>
 						<Text></Text>
 				</View>
+			<Swiper  
+			style={styles.wrapper} 
+			smoothTransition
+  			loop
+  			
+  			showPaginationBelow = {true}
+			>
+				<View style={styles.slide1}>
     				<Image
     				 style = {{height:deviceHeight,width:deviceWidth}}
     				  source={Banner_Imgs.GUANGGAOPAGE_BG01}
@@ -1141,6 +1183,43 @@ class ForeignExchangeDetailView extends Component{
     				
   				</View>
   			</Swiper>
+  			</View>
+		);
+	}
+
+	renderPingtaijieshao(){
+		const{navigation} = this.props;
+		return (
+			<View style={{flex: 1,alignItems:'center',justifyContent:'center'}}>
+			<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),width:deviceWidth,backgroundColor:'#071C2D'}}>
+						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
+						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>平台介绍         </Text>
+						<Text></Text>
+				</View>
+				<Image
+				  style={{flex: 1,height:deviceHeight,width:deviceWidth}}
+				  source={Banner_Imgs.ABOUTUS_BG}
+				/>
+				
+			</View>
+		);
+	}
+
+	renderPingzhonggenxin(){
+		const{navigation} = this.props;
+		return (
+			<View style={{flex: 1,alignItems:'center',justifyContent:'center'}}>
+			<View style = {{flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),width:deviceWidth,backgroundColor:'#071C2D'}}>
+						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
+						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>品种更新         </Text>
+						<Text></Text>
+				</View>
+				<Image
+				  style={{flex: 1,height:deviceHeight,width:deviceWidth}}
+				  source={Banner_Imgs.ABOUTUS_BG}
+				/>
+				
+			</View>
 		);
 	}
 
@@ -1396,7 +1475,9 @@ const styles = StyleSheet.create({
 		height: scaleSize(52),
 	},
 	wrapper: {
-    backgroundColor: '#009688',
+		
+    backgroundColor: '#071C2D',
+    
   },
   slide1: {
     flex: 1,

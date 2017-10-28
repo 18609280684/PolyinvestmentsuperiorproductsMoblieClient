@@ -82,7 +82,7 @@ const RootDrawerNavigator = DrawerNavigator({
 									 	陈建辉
 									</Text>
 									<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(9),color:'rgb(252,252,253)'}}>
-									  	生命不息，奋斗不止。
+									  	个性签名，多投多挣
 									</Text>
 								</View>
 	                       </View>
@@ -229,7 +229,7 @@ export default class App extends Component {
 
 			<RootStackNavigator />
 
-			// <RegisterView />
+			// <Login />
 			// <ForgetPasswordView />
 			//<ForgetPasswordView />
 			//<RootTabNavigationBar />
