@@ -45,6 +45,7 @@ import Cookie from 'react-native-cookie';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+
 var ITEM_HEIGHT = 400;
 var cookieCustomerId = '';
 
@@ -198,7 +199,7 @@ class ConsultationView extends Component {
 							// this.fetchIntegralData(2);
 						}}>
 							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Icon name = 'github-alt' size = {scaleSize(64)} color = '#F3D671'/>
+								<Icon name = '500px' size = {scaleSize(64)} color = '#F3D671'/>
 								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台二</Text>
 							</View>
 						</TouchableHighlight>

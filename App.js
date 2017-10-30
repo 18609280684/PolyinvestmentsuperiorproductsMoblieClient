@@ -37,12 +37,20 @@ import {
 import {
   RequestUrl,
   Banner_Imgs,
+  Constants,
+  globalVariable
 } from './Public/Constants.js';
 import {
 	DrawerNavigatorInformationView,
 	DrawerNavigatorShareView,
 	DrawerAboutUsView,
 } from './DrawerNavigator/DrawerNavigatorRootView.js';
+import {
+	renderLoadingView,
+	renderErrorView,
+	ToastShow
+} from './Public/Utils.js';
+import *as wechat from 'react-native-wechat';
 
 
 const RootDrawerNavigator = DrawerNavigator({
@@ -116,7 +124,26 @@ const RootDrawerNavigator = DrawerNavigator({
 						  				source={Banner_Imgs.INFORMATION_BGFORM}
 										/>
 								 	</View>
-	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('Share')} style = {{flex: 1,}}>
+	                       			 <TouchableHighlight onPress = {() => {
+	                       			 	wechat.isWXAppInstalled()
+                						.then((isInstalled) => {
+                  							if (isInstalled) {
+                    							ToastShow('微信已经安装!',Constants.TOAST_SHORT);
+                    							WeChat.shareToTimeline({
+    												type: 'imageUrl',
+    												title: '聚投优品',
+    												description: '聚投优品，您投资的最佳选择！',
+    												mediaTagName: 'email signature',
+    												messageAction: undefined,
+    												messageExt: undefined,
+    												imageUrl: 'http://www.jutouyp.com'
+  												});
+
+                 							}else{
+                    							ToastShow('微信未安装，请安装微信！',Constants.TOAST_SHORT);
+                  							}
+                						});
+	                       			 }} style = {{flex: 1,}}>
 	                       		
 	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
 	                       				<Image
@@ -217,6 +244,12 @@ const RootStackNavigator = StackNavigator({
 export default class App extends Component {
 
 	componentDidMount() {
+		 try {
+				wechat.registerApp('wxe20b89f7bd45d7f4');
+			}catch(e){
+				 console.error('eeeeeeeeeeeee:' + e);
+			}
+		 console.log('wechat:' + wechat);
 		this.timer = setTimeout(() => SplashScreen.hide(), 2000);
 	}
 

@@ -33,6 +33,7 @@ import {
   deviceWidth,
   deviceHeight
 } from './Public/ScreenAdaptationUtil.js';
+import *as wechat from 'react-native-wechat';
 
 
 
@@ -119,8 +120,6 @@ class Login extends Component {
           Cookie.set(RequestUrl.LOGIN_URL, 'autograph',responseJson.message.explain).then(() => console.log('autograph'));
           Cookie.set(RequestUrl.LOGIN_URL, 'pinCode',responseJson.message.explain).then(() => console.log('pinCode'));
           Cookie.set(RequestUrl.LOGIN_URL, 'bankCardNumber',responseJson.message.explain).then(() => console.log('bankCardNumber'));
-
-
 
           ToastShow('登录成功！',Constants.TOAST_SHORT);
            navigation.navigate('Home');
@@ -218,7 +217,23 @@ class Login extends Component {
                 style={{height:scaleSize(30),width:scaleSize(650),marginBottom:scaleSize(50)}}
                 source={Banner_Imgs.LOGINPAGE_WIXINFENGE}
               />
-              <TouchableHighlight onPress = {() => Alert.alert('')}>
+              <TouchableHighlight onPress = {() => {
+                wechat.isWXAppInstalled()
+                .then((isInstalled) => {
+                  if (isInstalled) {
+                    ToastShow('微信已经安装!',Constants.TOAST_SHORT);
+                    wechat.sendAuthRequest('snsapi_userinfo', 'wechat_sdk_demo')
+                      .then((responseCode) => {
+
+                      })
+                      .catch((err) => {
+                        ToastShow('登录授权发生错误：' + err.message,Constants.TOAST_SHORT);
+                      });
+                  }else{
+                    ToastShow('微信未安装，请安装微信！',Constants.TOAST_SHORT);
+                  }
+                });
+              }}>
                 <Image
                   style={{height:scaleSize(78),width:scaleSize(78)}}
                   source={Banner_Imgs.LOGINPAGE_WIXIN}
