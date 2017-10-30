@@ -67,6 +67,7 @@ const RootDrawerNavigator = DrawerNavigator({
 	// 	},
 	// },
 	contentComponent: props =>{
+		console.log('globalVariable.cookieCustomerIdyyyy:' + globalVariable.cookieCustomerId );
 		return(
 				<View style = {{flex: 1, backgroundColor:'rgb(16,20,31)'}}>
 	                <View style={{flex: 0.5,}}>

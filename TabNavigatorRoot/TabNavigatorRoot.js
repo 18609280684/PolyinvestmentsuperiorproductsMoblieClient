@@ -21,7 +21,8 @@ import {
 import {
 	RequestUrl,
 	Banner_Imgs,
-	Constants
+	Constants,
+	globalVariable
 } from '../Public/Constants.js';
 
 import {
@@ -72,7 +73,6 @@ class ConsultationView extends Component {
 			  resizeMode='contain'  
 			  source={Banner_Imgs.MAINPAGEVIEW_HOMEICON}
 			/>
-
 		),
 	});
 
@@ -92,35 +92,33 @@ class ConsultationView extends Component {
 
 	componentDidMount() {
 		Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => {
-			console.log('customerId:' + cookie);
-			cookieCustomerId = cookie;
+			globalVariable.cookieCustomerId = cookie;
 			this.fetchData();
 		});
-
-		// Cookie.get(RequestUrl.LOGIN_URL, 'customerName').then((cookie) => {
-		// 	console.log('customerName:' + cookie);
-		// 	global.constants.nickName = cookie;
 			
-		// });
+		Cookie.get(RequestUrl.LOGIN_URL, 'customerName').then((cookie) => {
+			// console.log('customerName:' + cookie);
+			globalVariable.nickName = cookie;
+			
+		});
 
-		// Cookie.get(RequestUrl.LOGIN_URL, 'autograph').then((cookie) => {
-		// 	console.log('autograph:' + cookie);
-		// 	global.constants.signature = cookie;
-		// });
+		Cookie.get(RequestUrl.LOGIN_URL, 'autograph').then((cookie) => {
+			// console.log('autograph:' + cookie);
+			globalVariable.signature = cookie;
+		});
 				
-			
-		
 	}
 
 
 
 	fetchData() {
+		console.log('globalVariable.cookieCustomerIdpppp:' + globalVariable.cookieCustomerId );
 		fetch(RequestUrl.MAINPAGEVIEW_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: 'customerId=' + cookieCustomerId
+          body: 'customerId=' + globalVariable.cookieCustomerId
         })
 			.then((response) => response.json())
 			.then((responseData) => {
@@ -686,7 +684,9 @@ class IntegralIncrementView extends Component {
 		if (this.state.newOrOld) {
 			//新手投资
 			return(
-				<TouchableHighlight style = {{flex: 1,}} onPress = {() => Alert.alert('touch ok')}>
+				<TouchableHighlight style = {{flex: 1,}} onPress = {() => {
+					this.popupDialog.show();
+				}}>
 					<View style={{height:scaleSize(200), backgroundColor:'#0F2435',}}>	
 						<View style={{height:scaleSize(35)}}>
 						</View>
@@ -709,7 +709,9 @@ class IntegralIncrementView extends Component {
 		{
 			//定期投资
 			return(
-			<TouchableHighlight style = {{flex: 1,}} onPress = {() => Alert.alert('touch ok')}>
+			<TouchableHighlight style = {{flex: 1,}} onPress = {() => {
+				this.popupDialog.show();
+			}}>
 				<View style={{height:scaleSize(200), backgroundColor:'#0F2435'}}>
 					<View style={{height:scaleSize(20)}}>
 					</View>
@@ -736,6 +738,54 @@ class IntegralIncrementView extends Component {
 	renderData(){
 		return(
 			<View style={{flex: 1, backgroundColor:'#071C2D'}}>
+
+			<PopupDialog  dialogTitle={<DialogTitle title="积分转入" titleStyle = {{backgroundColor:'#F3D671',}} titleTextStyle = {{fontSize:setSpText(14),color:'black',textAlignVertical:'center'}}/>}
+    				ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+    				 dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
+					 width = {deviceWidth - 80}
+					 height = {deviceHeight/2-50}
+					 overlayOpacity = {0.8}
+    				 >
+    				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
+      					
+      					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
+      						
+      						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
+      						<TextInput  style={{height:scaleSize(80),width:scaleSize(300),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1,borderRadius:4}}  
+               					onChangeText={(text) =>this.integral = text}
+                				placeholder = "请输入转入的积分" 
+                				placeholderTextColor  = 'gray'
+              					secureTextEntry  = {false}
+              					underlineColorAndroid = 'transparent'
+              					keyboardType = 'numeric'
+              				/>
+      						</View>
+      					</View>
+      					
+      					<View style = {{flex: 0.3,alignItems:'center'}}>
+							<TouchableHighlight onPress={() => {
+								if (this.integral != null && this.integral != '') {
+									console.log('this.integralssswwww:' + this.integral);
+									this.popupDialog.dismiss();
+									this.fetchIntegralData();
+								}else
+								{
+									ToastShow('转入积分不能小于0！',Constants.TOAST_SHORT);
+								}
+							}}>
+              				 	<Image
+              				 		style={{height:(deviceHeight/2 - 100)/5,width:deviceWidth - 150,}}
+              				  		source={Banner_Imgs.POPPAGE_CONFIRMINTEGRALTURNBUTTON}
+              					/>
+              				</TouchableHighlight>
+      					</View>
+      					
+
+    				</View>
+ 			    </PopupDialog>
+
 				<FlatList 
 						 ref={(flatList)=>this._flatList = flatList}
 						  ListHeaderComponent={this._header}			
@@ -992,33 +1042,18 @@ class GuanggaoViewDetailView extends Component {
 				<View style={{flex: 0.8,backgroundColor:'#0F2435'}}>
 						<View style={{flex: 0.9,justifyContent:'center',alignItems:'center'}}>
 							<Text style={{flex: 0.1,fontSize:setSpText(12),color:'#F3D671',marginTop:scaleSize(20)}}>
-							  广告标题
+							  {this.state.data.title}
 							</Text>
 							<Image
 							  style={{flex: 0.3,width:deviceWidth-20,height:scaleSize(248)}}
 							  source={Banner_Imgs.GUANGGAOPAGE_BANNER}
 							/>
 							<Text style={{flex: 0.6,fontSize:setSpText(11),width:deviceWidth-20,color:'rgb(128,128,128)',marginTop:scaleSize(36)}}>
-							      欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
-							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
-							  环球外汇行情中心显示，北京时间11:19，
-										澳元/美元报0.7848/49。
-										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
-							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
-							  环球外汇行情中心显示，北京时间11:19，
-										澳元/美元报0.7848/49。
-										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
-							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
-							  环球外汇行情中心显示，北京时间11:19，
-										澳元/美元报0.7848/49。
-										欧洲时段早盘美元/日元出现上涨，交投于一周高位112.70附近，投资者对美联储收紧政策重拾信心，美联储主席耶伦明年二月有望离任。美股涨至记录高位，打压避险货币，美国国债收益率周初出现反弹，10年期基准国债收益率收于2.33%，上个交易日录得2.3%。亚洲方面经济数据清淡，美国经济事件包括美联储官员讲话，9月新屋开工数据，市场密切观察这些数据，尽管市场波动较为短暂，但这些经济数据反映了美国经济增长形势。
-							  从技术角度来看，4小时图表显示，美元/日元倾向于上涨，汇价终于上涨突破100SMA，该均线维持持平，技术指标维持上升动能，处在中线上方。美元/日元10月10日的高位处在112.82，该水平为目前的阻力，年内高位处在113.43附近。若汇价跌破112.45，汇价将失去目前的动能，接近112.00，料届时将出现买盘。
-							  环球外汇行情中心显示，北京时间11:19，
-										澳元/美元报0.7848/49。
+							      {this.state.data.content}
 							</Text>
 						</View>
 						<View style={{flex: 0.1,}}>
-							<Text style={{textAlign:'right',fontSize:setSpText(9),color:'rgb(128,128,128)',marginLeft:scaleSize(100),marginTop:scaleSize(20)}}>2小时前        </Text>
+							<Text style={{textAlign:'right',fontSize:setSpText(9),color:'rgb(128,128,128)',marginLeft:scaleSize(100),marginTop:scaleSize(20)}}>{this.state.data.createDate}        </Text>
 						</View>
 				</View>
 				

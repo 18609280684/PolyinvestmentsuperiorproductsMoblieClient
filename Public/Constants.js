@@ -1,10 +1,11 @@
 const RequestUrl = {
-	MAINPAGEVIEW_URL: 'http://47.94.157.124:8080/indexAdvertisement/appIndex',
-	MAINPAGEDETAIL_URL: 'http://47.94.157.124:8080/indexAdvertisement/indexDetailed',
-	LOGIN_URL: 'http://47.94.157.124:8080/customer/login',
-	REGISTER_URL:'http://47.94.157.124:8080/customer/saveCustomer',
-	INTEGRAL_URL:'http://47.94.157.124:8080/indexAdvertisement/turnOut',
-	PERSONALINFORMATION_URL:'http://47.94.157.124:8080/customer/updateData',
+	MAINPAGEVIEW_URL: 'http://47.94.157.124/indexAdvertisement/appIndex',
+	MAINPAGEDETAIL_URL: 'http://47.94.157.124/indexAdvertisement/indexDetailed',
+	LOGIN_URL: 'http://47.94.157.124/customer/login',
+	REGISTER_URL:'http://47.94.157.124/customer/saveCustomer',
+	INTEGRAL_URL:'http://47.94.157.124/indexAdvertisement/turnOut',
+	PERSONALINFORMATION_URL:'http://47.94.157.124/customer/updateData',
+	// MAINPAGEDETAIL_URL:'http://47.94.157.124/indexAdvertisement/indexDetailed?type=0&indexAdvertisementId=2c91810d5ec75673015ec759bffe0001',
 };
 
 const Banner_Imgs = {
@@ -64,17 +65,26 @@ const Banner_Imgs = {
 const Constants = {
 	TOAST_SHORT:1,
 	TOAST_LONG:2,
-}
-
-global.constants = {
-   nickName:'',
-   signature:'',
 };
+
+// global.constants = {
+//    nickName:'',
+//    signature:'',
+// };
+
+globalVariable = {
+	cookieCustomerId:'',
+	nickName:'',
+	signature:'',
+};
+
+
 
 
 
 export {
 	RequestUrl,
 	Banner_Imgs,
-	Constants
+	Constants,
+	globalVariable
 };
