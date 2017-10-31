@@ -72,10 +72,11 @@ const Constants = {
 //    signature:'',
 // };
 
-globalVariable = {
+global.globalVariable = {
 	cookieCustomerId:'',
 	nickName:'',
 	signature:'',
+	jifen:10,
 };
 
 

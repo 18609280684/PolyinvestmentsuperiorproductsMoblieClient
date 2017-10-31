@@ -49,6 +49,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 var ITEM_HEIGHT = 400;
 var cookieCustomerId = '';
 
+var jifen = '';
+
 class ConsultationView extends Component {
 
 	_flatList;
@@ -95,8 +97,7 @@ class ConsultationView extends Component {
 		Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => {
 			globalVariable.cookieCustomerId = cookie;
 			this.fetchData();
-		});
-			
+		});	
 		Cookie.get(RequestUrl.LOGIN_URL, 'customerName').then((cookie) => {
 			// console.log('customerName:' + cookie);
 			globalVariable.nickName = cookie;
@@ -106,8 +107,7 @@ class ConsultationView extends Component {
 		Cookie.get(RequestUrl.LOGIN_URL, 'autograph').then((cookie) => {
 			// console.log('autograph:' + cookie);
 			globalVariable.signature = cookie;
-		});
-				
+		});		
 	}
 
 
@@ -128,6 +128,7 @@ class ConsultationView extends Component {
 					integrals:responseData.integral,
 					isLoading: false,
 				});
+				jifen = this.state.integrals;
 				ToastShow('获取数据成功',Constants.TOAST_SHORT);
 			})
 			.catch((error) => {
@@ -143,6 +144,7 @@ class ConsultationView extends Component {
 		const {
 			navigation
 		} = this.props;
+		
 		return (
 			<View style = {{flex: 1,height:scaleSize(610)}}>
 					<View style = {{flexDirection:'row', justifyContent:'flex-start', alignItems:'center', height:scaleSize(120),backgroundColor:'#071C2D'}}>
@@ -266,6 +268,10 @@ class ConsultationView extends Component {
         			console.log(responseJson);
         			if (responseJson.success) {
           			// navigate('Login');
+          					this.setState({
+          						integrals:this.state.integrals - this.integral,
+          					});
+          					jifen = this.state.integrals;
           					ToastShow('积分转入成功！',Constants.TOAST_SHORT);
         			} else {
           					ToastShow('积分转入失败！',Constants.TOAST_SHORT);
@@ -288,6 +294,7 @@ class ConsultationView extends Component {
 
 	//加载页面上数据
 	renderData() {
+
 		return (
 
 			<View style={{flex: 1, backgroundColor:'#071C2D'}}>
@@ -300,15 +307,15 @@ class ConsultationView extends Component {
 					 overlayOpacity = {0.8}
     				 >
     				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
-      					<Text style={{fontSize:setSpText(13),color:'rgb(248,231,162)',textAlign:'center',textAlignVertical:'center',marginTop:scaleSize(20)}}>
-      					  MT4平台
+      					<Text style={{fontSize:setSpText(13),color:'rgb(248,231,162)',textAlignVertical:'center',marginTop:scaleSize(20),marginLeft:scaleSize(50),}}>
+      					  积分转入比例:(聚投/MT4)1:7
       					</Text>
       					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
       						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
       						
       						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
       						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
-      						<TextInput  style={{height:scaleSize(80),width:scaleSize(300),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1,borderRadius:4}}  
+      						<TextInput  style={{height:scaleSize(90),width:scaleSize(300),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1,borderRadius:4}}  
                					onChangeText={(text) =>this.integral = text}
                 				placeholder = "请输入转入的积分" 
                 				placeholderTextColor  = 'gray'
@@ -609,6 +616,7 @@ class IntegralIncrementView extends Component {
 			errorInfo: "",
 			progress:0.1,
 			newOrOld:true,
+			change:true,
 		};
 	}
 
@@ -750,7 +758,7 @@ class IntegralIncrementView extends Component {
     				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
       					
       					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
-      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {jifen}</Text>
       						
       						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
       						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>

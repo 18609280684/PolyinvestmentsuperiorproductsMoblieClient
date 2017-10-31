@@ -139,7 +139,7 @@ class Login extends Component {
   }
 
   renderData(){
-    // const{navigate} = this.props.navigation;
+    const{navigate} = this.props.navigation;
     var _scrollView: ScrollView;
     return(
       <ScrollView
