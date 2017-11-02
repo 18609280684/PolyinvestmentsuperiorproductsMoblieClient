@@ -10,6 +10,8 @@ const RequestUrl = {
 
 const Banner_Imgs = {
 	MAINPAGEVIEW_BANNER: require('../Images/banner/banner1.png'),
+	MAINPAGEVIEW_BANNERONE: require('../Images/banner/banner2.png'),
+	MAINPAGEVIEW_BANNERTWO: require('../Images/banner/banner3.png'),
 	MAINPAGEVIEW_TOPICON: require('../Images/ICON/personIcon.png'),
 	MAINPAGEVIEW_HOMEICON: require('../Images/ICON/HomeIcon.png'),
 	MAINPAGEVIEW_WAIHUIICON: require('../Images/ICON/WaihuiIcon.png'),

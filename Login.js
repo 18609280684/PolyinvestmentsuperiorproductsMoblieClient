@@ -161,7 +161,7 @@ class Login extends Component {
 
           <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
             <Image
-              style={{height:scaleSize(70),width:scaleSize(430)}}
+              style={{height:scaleSize(80),width:scaleSize(485)}}
               source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                 onChangeText={(text) => this.name = text} 
@@ -175,7 +175,7 @@ class Login extends Component {
 
         
             <Image
-              style={{height:scaleSize(70),width:scaleSize(430)}}
+              style={{height:scaleSize(80),width:scaleSize(485)}}
               source={Banner_Imgs.LOGINPAGE_MIMA}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                 onChangeText={(text) => {
@@ -461,7 +461,7 @@ class RegisterView extends Component {
 
           <View style={{flex: 0.4,justifyContent:'space-around',alignItems:'center',marginTop:scaleSize(100)}}>
             <Image
-              style={{height:scaleSize(70),width:scaleSize(430)}}
+              style={{height:scaleSize(80),width:scaleSize(485)}}
               source={Banner_Imgs.LOGINPAGE_ZHANGHAO}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                 onChangeText={(text) => this.Username = text} 
@@ -475,7 +475,7 @@ class RegisterView extends Component {
 
         
             <Image
-              style={{height:scaleSize(70),width:scaleSize(430)}}
+              style={{height:scaleSize(80),width:scaleSize(485)}}
               source={Banner_Imgs.LOGINPAGE_MIMA}>
               <TextInput  style={{marginLeft:scaleSize(70),width:scaleSize(360),fontSize:setSpText(11),color:'#F3D671'}}  
                 onChangeText={(text) => this.password = text} 
@@ -488,7 +488,7 @@ class RegisterView extends Component {
 
             <View style={{flexDirection:'row',}}>
                
-                   <TextInput  style={{width:scaleSize(250),height:scaleSize(70),fontSize:setSpText(11),}}  
+                   <TextInput  style={{width:scaleSize(250),height:scaleSize(80),fontSize:setSpText(11),}}  
                        onChangeText={(text) => this.yanzhenma = text} 
                         placeholder = "验证码" 
                         placeholderTextColor  = 'gray'

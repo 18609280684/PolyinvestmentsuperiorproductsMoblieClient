@@ -43,6 +43,7 @@ import PopupDialog,{
 } from 'react-native-popup-dialog';
 import Cookie from 'react-native-cookie';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ViewPager from 'react-native-viewpager'; 
 
 
 
@@ -50,6 +51,12 @@ var ITEM_HEIGHT = 400;
 var cookieCustomerId = '';
 
 var jifen = '';
+
+const BANNER_IMGS = [  
+    Banner_Imgs.MAINPAGEVIEW_BANNER,  
+    Banner_Imgs.MAINPAGEVIEW_BANNERONE,  
+    Banner_Imgs.MAINPAGEVIEW_BANNERTWO,    
+];
 
 class ConsultationView extends Component {
 
@@ -73,7 +80,7 @@ class ConsultationView extends Component {
 		}) => (
 			<Image
 			  style={[styles.icon, {tintColor: tintColor}]}
-			  resizeMode='contain'  
+			  resizeMode='center'  
 			  source={Banner_Imgs.MAINPAGEVIEW_HOMEICON}
 			/>
 		),
@@ -83,14 +90,20 @@ class ConsultationView extends Component {
 		super(props);
 		this.integral = 0;
 		this.platform = 0;
+		var dataSource = new ViewPager.DataSource({  
+            pageHasChanged: (p1, p2) => p1 !== p2,  
+        });  
 		this.state = {
 			data: [],
 			isLoading: true,
 			error: false,
 			errorInfo: "",
 			integrals:'',
+			dataSource:dataSource.cloneWithPages(BANNER_IMGS), 
 		};
 
+		
+		
 	}
 
 	componentDidMount() {
@@ -140,6 +153,14 @@ class ConsultationView extends Component {
 			.done();
 	}
 
+	_renderPage(data, pageID) {  
+        return (  
+            <Image  
+                source={data}  
+                style={styles.page}/>  
+        );  
+    } 
+
 	_header = () => {
 		const {
 			navigation
@@ -165,7 +186,14 @@ class ConsultationView extends Component {
 					</View>
 
 
-						<Image source = {Banner_Imgs.MAINPAGEVIEW_BANNER} style = {{height:scaleSize(280), width:deviceWidth, resizeMode:'cover',}} />
+						<View style={styles.container}>  
+                  			<ViewPager  
+                    		style={{height:280}}  
+                    		dataSource={this.state.dataSource}  
+                    		renderPage={this._renderPage}  
+                    		isLoop={true}  
+                    		autoPlay={true}/>  
+            			</View>  
 					
 	
 
@@ -520,7 +548,7 @@ class ForeignExchangeView extends Component {
 		}) => (
 			<Image
 			  style={[styles.icon, {tintColor: tintColor}]}
-			  resizeMode='contain'  
+			  resizeMode='center'  
 			  source={Banner_Imgs.MAINPAGEVIEW_WAIHUIICON}
 			/>
 
@@ -637,7 +665,7 @@ class IntegralIncrementView extends Component {
 		}) => (
 			<Image
 			  style={[styles.icon, {tintColor: tintColor}]}
-			  resizeMode='contain'  
+			  resizeMode='center'  
 			  source={Banner_Imgs.MAINPAGEVIEW_ZENGZHIICON}
 			/>
 
@@ -834,7 +862,7 @@ class ForumView extends Component {
 		}) => (
 			<Image
 			  style={[styles.icon, {tintColor: tintColor}]}
-			  resizeMode='contain'  
+			  resizeMode='center'  
 			  source={Banner_Imgs.MAINPAGEVIEW_TIEBAICON}
 			/>
 		),
@@ -1546,6 +1574,22 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
+  bannerContainer: {  
+        flex: 1,  
+        flexDirection: 'row',  
+        alignItems: 'flex-start',  
+        paddingTop:5,  
+        paddingLeft:5,  
+        backgroundColor:'#999999',  
+        paddingRight:5,  
+        paddingBottom:5,  
+    }, 
+    page: {  
+        width: deviceWidth,//设备宽(只是一种实现，此处多余)  
+        flex: 1,  
+        height: scaleSize(280),  
+        resizeMode: 'cover'  
+    },  
 });
 
 export {
