@@ -141,7 +141,8 @@ class ConsultationView extends Component {
 					integrals:responseData.integral,
 					isLoading: false,
 				});
-				jifen = this.state.integrals;
+				 Cookie.set(RequestUrl.LOGIN_URL, 'integral',this.state.integrals).then(() => console.log('integral'));
+				// jifen = this.state.integrals;
 				ToastShow('获取数据成功',Constants.TOAST_SHORT);
 			})
 			.catch((error) => {
@@ -167,10 +168,10 @@ class ConsultationView extends Component {
 		} = this.props;
 		
 		return (
-			<View style = {{flex: 1,height:scaleSize(610)}}>
+			<View style = {{height:scaleSize(420)}}>
 					<View style = {{flexDirection:'row', justifyContent:'flex-start', alignItems:'center', height:scaleSize(120),backgroundColor:'#071C2D'}}>
 						<TouchableHighlight onPress = {() => {
-						navigation.navigate('DrawerOpen');
+						navigation.navigate('DrawerOpen',{name:'chenjianhui'});
 						}}>
 							<Image
 					  			style={{width:scaleSize(58),height:scaleSize(58),marginLeft:scaleSize(15)}}
@@ -188,7 +189,7 @@ class ConsultationView extends Component {
 
 						<View style={styles.container}>  
                   			<ViewPager  
-                    		style={{height:280}}  
+                    		style={{height:300}}  
                     		dataSource={this.state.dataSource}  
                     		renderPage={this._renderPage}  
                     		isLoop={true}  
@@ -199,72 +200,7 @@ class ConsultationView extends Component {
 
 					<View style={{height:scaleSize(25),backgroundColor:'#071C2D'}}/>
 
-					<View style={{flexDirection:'row',height:scaleSize(155), backgroundColor:'rgb(15,36,53)'}}>
-
-						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
-							this.popupDialog.show();
-							this.platform = 1;
-							// this.fetchIntegralData(1);
-						}}>
-							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Icon name = 'gift' size = {scaleSize(64)} color = '#F3D671'/>
-								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>积分互转</Text>
-							</View>
-						</TouchableHighlight>
-
-						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
-							this.popupDialog.show();
-							this.platform = 1;
-							// this.fetchIntegralData(1);
-						}}>
-							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Icon name = 'github-alt' size = {scaleSize(64)} color = '#F3D671'/>
-								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台一</Text>
-							</View>
-						</TouchableHighlight>
-						
-						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
-							this.popupDialog.show();
-							this.platform = 2;
-							// this.fetchIntegralData(2);
-						}}>
-							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Icon name = '500px' size = {scaleSize(64)} color = '#F3D671'/>
-								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台二</Text>
-							</View>
-						</TouchableHighlight>
-
-						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
-							this.popupDialog.show();
-							this.platform = 3;
-							// this.fetchIntegralData(3);
-						}}>
-							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Image
-							  	style={{width:scaleSize(58),height:scaleSize(58),}}
-							  	source={Banner_Imgs.MAINPAGEVIEW_TOPICON}
-								/>
-								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台三</Text>
-							</View>
-						</TouchableHighlight>
-
-						<TouchableHighlight style = {{flex: 0.2,}} onPress = {() => {
-							this.popupDialog.show();
-							this.platform = 4;
-							// this.fetchIntegralData(4);
-						}}>
-							<View style={{flex: 1, alignItems:'center',justifyContent:'center'}}>
-								<Image
-							  	style={{width:scaleSize(58),height:scaleSize(58),}}
-							  	source={Banner_Imgs.MAINPAGEVIEW_TOPICON}
-								/>
-								<Text style = {{fontSize:setSpText(10), color:'#F3D671',marginTop:scaleSize(10)}}>平台四</Text>
-							</View>
-						</TouchableHighlight>
-						
-					</View>
-
-					<View style={{height:scaleSize(30),backgroundColor:'#071C2D'}}/>
+					
 			</View>
 		);
 	}
@@ -327,54 +263,7 @@ class ConsultationView extends Component {
 
 			<View style={{flex: 1, backgroundColor:'#071C2D'}}>
 
-				<PopupDialog  dialogTitle={<DialogTitle title="积分转入" titleStyle = {{backgroundColor:'#F3D671',}} titleTextStyle = {{fontSize:setSpText(14),color:'black',textAlignVertical:'center'}}/>}
-    				ref={(popupDialog) => { this.popupDialog = popupDialog; }}
-    				 dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
-					 width = {deviceWidth - 80}
-					 height = {deviceHeight/2-50}
-					 overlayOpacity = {0.8}
-    				 >
-    				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
-      					<Text style={{fontSize:setSpText(13),color:'rgb(248,231,162)',textAlignVertical:'center',marginTop:scaleSize(20),marginLeft:scaleSize(50),}}>
-      					  积分转入比例:(聚投/MT4)1:7
-      					</Text>
-      					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
-      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
-      						
-      						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
-      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
-      						<TextInput  style={{height:scaleSize(90),width:scaleSize(300),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1,borderRadius:4}}  
-               					onChangeText={(text) =>this.integral = text}
-                				placeholder = "请输入转入的积分" 
-                				placeholderTextColor  = 'gray'
-              					secureTextEntry  = {false}
-              					underlineColorAndroid = 'transparent'
-              					keyboardType = 'numeric'
-              				/>
-      						</View>
-      					</View>
-      					
-      					<View style = {{flex: 0.3,alignItems:'center'}}>
-							<TouchableHighlight onPress={() => {
-								if (this.integral != null && this.integral != '') {
-									console.log('this.integralssswwww:' + this.integral);
-									this.popupDialog.dismiss();
-									this.fetchIntegralData();
-								}else
-								{
-									ToastShow('转入积分不能小于0！',Constants.TOAST_SHORT);
-								}
-							}}>
-              				 	<Image
-              				 		style={{height:(deviceHeight/2 - 100)/5,width:deviceWidth - 150,}}
-              				  		source={Banner_Imgs.POPPAGE_CONFIRMINTEGRALTURNBUTTON}
-              					/>
-              				</TouchableHighlight>
-      					</View>
-      					
-
-    				</View>
- 			    </PopupDialog>
+			
 
 				<FlatList 
 						 ref={(flatList)=>this._flatList = flatList}
@@ -633,29 +522,6 @@ class IntegralIncrementView extends Component {
 	_flatList;
 
 	_keyExtractor = (item, index) => index;
-	
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			data: [{key:'1'},{key:'2'},{key:'3'},{key:'4'}],
-			isLoading: false,
-			error: false,
-			errorInfo: "",
-			progress:0.1,
-			newOrOld:true,
-			change:true,
-		};
-	}
-
-	componentDidMount() {
-		// this.setInterval(
-  //     		() => {
-  //       	var progress = (this.state.progress + 0.02) % 1;
-  //      	 	this.setState({progress: progress});
-  //     	}, 50
-  //   	);
-	}
 
 	static navigationOptions = {
 		header:false,
@@ -671,6 +537,82 @@ class IntegralIncrementView extends Component {
 
 		),
 	};
+	
+	constructor(props) {
+		super(props);
+		this.integral = '';
+		this.state = {
+			data: [{key:'1'},{key:'2'},{key:'3'},{key:'4'}],
+			isLoading: false,
+			error: false,
+			errorInfo: "",
+			progress:0.1,
+			newOrOld:true,
+			change:true,
+			integrals:'',
+			platform:'',
+			cookieID:'',
+		};
+	}
+
+	componentDidMount() {
+		// this.setInterval(
+  //     		() => {
+  //       	var progress = (this.state.progress + 0.02) % 1;
+  //      	 	this.setState({progress: progress});
+  //     	}, 50
+  //   	);
+	}
+
+	componentWillMount() {
+		Cookie.get(RequestUrl.LOGIN_URL, 'integral').then((cookie) => {
+			this.setState({
+				integrals:cookie,
+			});
+		});
+
+		Cookie.get(RequestUrl.LOGIN_URL, 'integral').then((cookie) => {
+			this.setState({
+				cookieID:cookie,
+			});
+			this.fetchData();
+		});
+		console.log('componentWillMount');
+	}
+
+	fetchData() {
+		
+		fetch(RequestUrl.JIFENZENGZHIPAGE_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'customerId=' + this.state.cookieID + '&' + 'type=' + (this.state.newOrOld?1:2)
+        })
+			.then((response) => response.json())
+			.then((responseData) => {
+				if (responseData.success) {
+					this.setState({
+						data: responseData.message,
+						isLoading: false,
+					});
+					ToastShow('获取数据成功',Constants.TOAST_SHORT);
+				}else{
+					ToastShow('获取数据失败',Constants.TOAST_SHORT);
+				}
+
+				
+			})
+			.catch((error) => {
+				this.setState({
+					error: true,
+					errorInfo: error,
+				});
+			})
+			.done();
+	}
+
+	
 
 	_header = () =>{
 		return(
@@ -729,7 +671,7 @@ class IntegralIncrementView extends Component {
 						</View>
 						<View style={{flex: 0.4,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
 							<Text style = {{fontSize:setSpText(20),color:'red'}}>8.0%</Text>
-							<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>    3个月</Text>
+							<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>    {item.item.totalDayd}</Text>
 							<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>已投56人</Text>
 						</View>
 						<View style={{flex: 0.3,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
@@ -754,7 +696,7 @@ class IntegralIncrementView extends Component {
 					</View>
 					<View style={{flex: 0.4,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
 						<Text style = {{fontSize:setSpText(20),color:'red'}}>8.0%</Text>
-						<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>        3个月</Text>
+						<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>        {item.item.totalDayd}</Text>
 						<Text style = {{fontSize:setSpText(11),color:'#F3D671'}}>已投56人</Text>
 					</View>
 					<View style={{flex: 0.3,flexDirection:'row',justifyContent:'space-around',alignItems:'center'}}>
@@ -763,13 +705,57 @@ class IntegralIncrementView extends Component {
 						<Text style = {{fontSize:setSpText(9),color:'#808080'}}>融资300.00万</Text>
 					</View>
 					<View style={{flex: 0.3,justifyContent:'center',alignItems:'center',}}>
-						<ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress = {this.state.progress} color = '#F3D671' style = {{height:scaleSize(30),width:deviceWidth-40}}/>
+						<ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress = {item.item.yield/item.item.totaAmount} color = '#F3D671' style = {{height:scaleSize(30),width:deviceWidth-40}}/>
 					</View>
 				</View>
 			</TouchableHighlight>
 			);
 		}
 		
+	}
+
+	fetchIntegralData(){
+		
+			var ids = Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => console.log(cookie));
+			Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => console.log(cookie));
+			console.log('ids:' + ids);
+
+
+		Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => {
+				fetch(RequestUrl.INTEGRAL_URL, {
+          				method: 'POST',
+          				headers: {
+            				'Content-Type': 'application/x-www-form-urlencoded',
+         				 },
+         				body: 'customerId=' + cookie + '&' + 'amount=' + this.integral + '&' + 'type=' + this.state.platform
+       				 })
+      				.then((response) => response.json())
+      				.then((responseJson) => {
+        			// this.setState({
+        			//   isLoading: false,
+        			// });
+        			console.log(responseJson);
+        			if (responseJson.success) {
+          			// navigate('Login');
+          					this.setState({
+          						integrals:this.state.integrals - this.integral,
+          					});
+          					 Cookie.set(RequestUrl.LOGIN_URL, 'integral',this.state.integrals).then(() => console.log('integral'));
+          					ToastShow('积分转入成功！',Constants.TOAST_SHORT);
+        			} else {
+          					ToastShow('积分转入失败！',Constants.TOAST_SHORT);
+        				}
+      				})
+      				.catch((error) => {
+        				// ToastShow(error,Constants.TOAST_SHORT);
+        				console.error(error);
+        				Alert.alert(error);
+        				this.setState({
+          				error: true,
+          				errorInfo: error,
+        		});
+      		});
+		});
 	}
 
 	renderData(){
@@ -786,7 +772,7 @@ class IntegralIncrementView extends Component {
     				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
       					
       					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
-      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {jifen}</Text>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
       						
       						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
       						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
@@ -882,6 +868,48 @@ class ForumView extends Component {
 			errorInfo: "",
 		};
 	}
+
+	componentWillMount() {
+		Cookie.get(RequestUrl.LOGIN_URL, 'integral').then((cookie) => {
+			this.setState({
+				cookieID:cookie,
+			});
+			this.fetchData();
+		});
+		console.log('componentWillMount');
+	}
+
+		fetchData() {
+		
+		fetch(RequestUrl.TIEBAZHUYEPAGE_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'customerId=' + this.state.cookieID
+        })
+			.then((response) => response.json())
+			.then((responseData) => {
+				if (responseData.result) {
+					this.setState({
+						data: responseData.result,
+						isLoading: false,
+					});
+					ToastShow('获取数据成功',Constants.TOAST_SHORT);
+				}else{
+					ToastShow('获取数据失败',Constants.TOAST_SHORT);
+				}
+
+				
+			})
+			.catch((error) => {
+				this.setState({
+					error: true,
+					errorInfo: error,
+				});
+			})
+			.done();
+	}
 	
 	_header = () =>{
 		return(
@@ -913,21 +941,21 @@ class ForumView extends Component {
 			<View style={{height:scaleSize(280)}}>
 				<View style={{flex: 0.3,flexDirection:'row',justifyContent:'flex-start',alignItems:'center',marginTop:scaleSize(10)}}>
 					<Image style = {{marginLeft:scaleSize(40),height:scaleSize(70),width:scaleSize(70), marginTop:scaleSize(10)}} source = {Banner_Imgs.TIEBAPAGE_TOUXIANG}/>
-					<Text style = {{fontSize:setSpText(12),color:'#F3D671',alignItems:'flex-end'}}>    陈建辉</Text>
+					<Text style = {{fontSize:setSpText(12),color:'#F3D671',alignItems:'flex-end'}}>    {item.item.createrName}</Text>
 				</View>
 				<TouchableHighlight style = {{flex: 0.5,}} onPress = {() => navigate('ForumViewDetail',{item:item})}>
 					<View style={{flex: 1,alignItems:'flex-start',marginTop:scaleSize(10)}}>
-						<Text style = {{fontSize:setSpText(11),color:'#E8DDCB',marginLeft:scaleSize(40)}}>聚美优品真的超级划算，福利大大的！</Text>
-						<Text style = {{fontSize:setSpText(9),color:'#808080',marginLeft:scaleSize(40),marginRight:scaleSize(40),marginTop:scaleSize(10)}}>聚美优品真的超级划算，福利大大的！啊好的稍等哈接电话结婚的很多化建设等哈回答时间的话按时爱思垃圾快点哈实力肯定华山路空的话爱的合适的话撒的撒料打哪。。。</Text>
+						<Text style = {{fontSize:setSpText(11),color:'#E8DDCB',marginLeft:scaleSize(40)}}>{item.item.title}</Text>
+						<Text style = {{fontSize:setSpText(9),color:'#808080',marginLeft:scaleSize(40),marginRight:scaleSize(40),marginTop:scaleSize(10)}}>{item.item.content}</Text>
 					</View>
 				</TouchableHighlight>
 				<View style={{flex: 0.2,flexDirection:'row',justifyContent:'flex-end',alignItems:'center'}}>
-					<TouchableHighlight onPress = {() => Alert.alert('397赞')}>
-						<Text style={{fontSize:setSpText(9),color:'#F3D671'}}>397赞    </Text>
-					</TouchableHighlight>
-					<TouchableHighlight onPress = {() => Alert.alert('3977评论 ')}>
-						<Text style={{fontSize:setSpText(9),color:'#F3D671'}}>  3977评论        </Text>
-					</TouchableHighlight>
+					
+						<Text style={{fontSize:setSpText(9),color:'#F3D671'}}>{item.item.forumFabulousCount}赞    </Text>
+					
+					
+						<Text style={{fontSize:setSpText(9),color:'#F3D671'}}>  {item.item.forumCommentCount}评论        </Text>
+					
 				</View>
 			</View>
 		);
@@ -1028,12 +1056,14 @@ class GuanggaoViewDetailView extends Component {
 
 	constructor(props) {
 		super(props);
-
+		this.integral = '';
 		this.state = {
 			data: {},
 			isLoading: true,
 			error: false,
 			errorInfo: "",
+			integrals:'',
+			platform:'',
 		};
 	}
 
@@ -1067,10 +1097,109 @@ class GuanggaoViewDetailView extends Component {
 			.done();
 	}
 
+	componentWillMount() {
+		Cookie.get(RequestUrl.LOGIN_URL, 'integral').then((cookie) => {
+			this.setState({
+				integrals:cookie,
+			});
+		});
+		console.log('componentWillMount');
+	}
+
+	fetchIntegralData(){
+		
+			var ids = Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => console.log(cookie));
+			Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => console.log(cookie));
+			console.log('ids:' + ids);
+
+
+		Cookie.get(RequestUrl.LOGIN_URL, 'customerId').then((cookie) => {
+				fetch(RequestUrl.INTEGRAL_URL, {
+          				method: 'POST',
+          				headers: {
+            				'Content-Type': 'application/x-www-form-urlencoded',
+         				 },
+         				body: 'customerId=' + cookie + '&' + 'amount=' + this.integral + '&' + 'type=' + this.state.platform
+       				 })
+      				.then((response) => response.json())
+      				.then((responseJson) => {
+        			// this.setState({
+        			//   isLoading: false,
+        			// });
+        			console.log(responseJson);
+        			if (responseJson.success) {
+          			// navigate('Login');
+          					this.setState({
+          						integrals:this.state.integrals - this.integral,
+          					});
+          					 Cookie.set(RequestUrl.LOGIN_URL, 'integral',this.state.integrals).then(() => console.log('integral'));
+          					ToastShow('积分转入成功！',Constants.TOAST_SHORT);
+        			} else {
+          					ToastShow('积分转入失败！',Constants.TOAST_SHORT);
+        				}
+      				})
+      				.catch((error) => {
+        				// ToastShow(error,Constants.TOAST_SHORT);
+        				console.error(error);
+        				Alert.alert(error);
+        				this.setState({
+          				error: true,
+          				errorInfo: error,
+        		});
+      		});
+		});
+	}
+
 	renderData() {
 		const{navigation} = this.props;
 		return(
 			<View style={{flex: 1,backgroundColor:'#071C2D'}}>
+						
+				<PopupDialog  dialogTitle={<DialogTitle title="积分转入" titleStyle = {{backgroundColor:'#F3D671',}} titleTextStyle = {{fontSize:setSpText(14),color:'black',textAlignVertical:'center'}}/>}
+    				ref={(popupDialog) => { this.popupDialog = popupDialog; }}
+    				 dialogAnimation = { new SlideAnimation({ slideFrom: 'bottom' }) }
+					 width = {deviceWidth - 80}
+					 height = {deviceHeight/2-50}
+					 overlayOpacity = {0.8}
+    				 >
+    				<View style = {{flex: 1, backgroundColor:'#071C2D'}}>
+      					
+      					<View style={{flex: 0.5,marginTop:scaleSize(40)}}>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center'}}>账户积分:    {this.state.integrals}</Text>
+      						
+      						<View style={{flex: 0.5,flexDirection:'row',alignItems:'center',marginTop:scaleSize(40)}}>
+      						<Text style={{fontSize:setSpText(10),color:'rgb(248,231,162)',marginLeft:scaleSize(50),textAlignVertical:'center',}}>转入积分:    </Text>
+      						<TextInput  style={{height:scaleSize(80),width:scaleSize(300),fontSize:setSpText(11),color:'#F3D671',borderColor: 'gray', borderWidth: 1,borderRadius:4}}  
+               					onChangeText={(text) =>this.integral = text}
+                				placeholder = "请输入转入的积分" 
+                				placeholderTextColor  = 'gray'
+              					secureTextEntry  = {false}
+              					underlineColorAndroid = 'transparent'
+              					keyboardType = 'numeric'
+              				/>
+      						</View>
+      					</View>
+      					
+      					<View style = {{flex: 0.3,alignItems:'center'}}>
+							<TouchableHighlight onPress={() => {
+								if (this.integral != null && this.integral != '') {
+									console.log('this.integralssswwww:' + this.integral);
+									this.popupDialog.dismiss();
+									this.fetchIntegralData();
+								}else
+								{
+									ToastShow('转入积分不能小于0！',Constants.TOAST_SHORT);
+								}
+							}}>
+              				 	<Image
+              				 		style={{height:(deviceHeight/2 - 100)/5,width:deviceWidth - 150,}}
+              				  		source={Banner_Imgs.POPPAGE_CONFIRMINTEGRALTURNBUTTON}
+              					/>
+              				</TouchableHighlight>
+      					</View>
+    				</View>
+ 			    </PopupDialog>
+
 				<View style = {{flex: 0.1, flexDirection:'row', justifyContent:'space-between', alignItems:'center', height:scaleSize(120),backgroundColor:'#071C2D'}}>
 						<Text style = {{fontSize:setSpText(11), color:'#F3D671',}} onPress = {() => navigation.goBack()}>     返回</Text>
 						<Text style = {{fontSize:setSpText(14), color:'#F3D671',}}>外汇详情          </Text>
@@ -1100,7 +1229,7 @@ class GuanggaoViewDetailView extends Component {
 				  		source={Banner_Imgs.GUANGGAOPAGE_FENGEFU}
 					/>
 				
-						<Text style = {{flex: 0.95,fontSize:setSpText(11),color:'#F3D671',textAlign:'center',textAlignVertical:'center'}} onPress={() => Alert.alert('立即参与')}>
+						<Text style = {{flex: 0.95,fontSize:setSpText(11),color:'#F3D671',textAlign:'center',textAlignVertical:'center'}} onPress={() => this.popupDialog.show()}>
 					  		立即参与
 						</Text>
 			

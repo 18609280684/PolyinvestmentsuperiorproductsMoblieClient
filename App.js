@@ -44,6 +44,7 @@ import {
 	DrawerNavigatorInformationView,
 	DrawerNavigatorShareView,
 	DrawerAboutUsView,
+	DrawerIntegralManagement
 } from './DrawerNavigator/DrawerNavigatorRootView.js';
 import {
 	renderLoadingView,
@@ -51,6 +52,7 @@ import {
 	ToastShow
 } from './Public/Utils.js';
 import *as wechat from 'react-native-wechat';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const RootDrawerNavigator = DrawerNavigator({
@@ -66,6 +68,9 @@ const RootDrawerNavigator = DrawerNavigator({
 	AboutUs: {
 		screen: DrawerAboutUsView,
 	},
+	IntegralManagement:{
+		screen:DrawerIntegralManagement
+	},
 },{
 	drawerWidth:deviceWidth - scaleSize(200),
 	// contentOptions:{
@@ -74,8 +79,10 @@ const RootDrawerNavigator = DrawerNavigator({
 	// 		backgroundColor:'rgb(16,20,31)',
 	// 	},
 	// },
-	contentComponent: props =>{
+	contentComponent: (props) =>{
 		console.log('globalVariable.cookieCustomerIdyyyy:' + globalVariable.cookieCustomerId );
+		const{params} = props.navigation.state;
+
 		return(
 				<View style = {{flex: 1, backgroundColor:'rgb(16,20,31)'}}>
 	                <View style={{flex: 0.5,}}>
@@ -96,7 +103,7 @@ const RootDrawerNavigator = DrawerNavigator({
 								</View>
 	                       </View>
 	                       <View style={{flex: 0.5,}}>
-	                       		<View style={{flex: 0.3,}}>
+	                       		<View style={{flex:(1/4),}}>
 	                       		  <View style = {{backgroundColor:'rgb(34,52,67)'}}>
 									<Image
 						  			style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
@@ -117,7 +124,7 @@ const RootDrawerNavigator = DrawerNavigator({
 	                       			
 	                       			</TouchableHighlight>
 	                       		</View>
-	                       		<View style={{flex: 0.3,}}>
+	                       		<View style={{flex:(1/4),}}>
 	                       			<View style = {{backgroundColor:'rgb(34,52,67)'}}>
 										<Image
 						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
@@ -157,14 +164,18 @@ const RootDrawerNavigator = DrawerNavigator({
 	                       			
 	                       			</TouchableHighlight>
 	                       		</View>
-	                       		<View style={{flex: 0.3,}}>
-	                       			 <View style = {{backgroundColor:'rgb(34,52,67)'}}>
+
+	                       		<View style={{flex:(1/4),}}>
+	                       			<View style = {{backgroundColor:'rgb(34,52,67)'}}>
 										<Image
 						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
 						  				source={Banner_Imgs.INFORMATION_BGFORM}
 										/>
-								 	 </View>
-	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('AboutUs')} style = {{flex: 1,}}>
+								 	</View>
+	                       			 <TouchableHighlight onPress = {() => {
+	                       			 		props.navigation.navigate('AboutUs');
+                						
+	                       			 }} style = {{flex: 1,}}>
 	                       		
 	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
 	                       				<Image
@@ -173,6 +184,26 @@ const RootDrawerNavigator = DrawerNavigator({
 	                       				/>
 	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(11),color:'#F3D671',marginLeft:scaleSize(25)}}>
 	                       				  关于我们
+	                       				</Text>
+	                       				</View>
+	                       			
+	                       			</TouchableHighlight>
+	                       		</View>
+
+	                       		<View style={{flex:(1/4),}}>
+	                       			 <View style = {{backgroundColor:'rgb(34,52,67)'}}>
+										<Image
+						  				style={{height:scaleSize(2),backgroundColor:'#0F2435'}}
+						  				source={Banner_Imgs.INFORMATION_BGFORM}
+										/>
+								 	 </View>
+	                       			 <TouchableHighlight onPress = {() => props.navigation.navigate('IntegralManagement')} style = {{flex: 1,}}>
+	                       		
+	                       			  <View style = {{flex: 1,flexDirection:'row',alignItems:'center'}}>
+	                       				<Icon name = 'stack-overflow' size = {scaleSize(54)} color = '#F3D671' style = {{marginLeft:scaleSize(25)}}/>
+	                       				<Text style={{fontFamily:'PingFang-SC-Medium',fontSize:setSpText(11),color:'#F3D671',marginLeft:scaleSize(25)}}>
+	                       				  
+	                       				  积分管理
 	                       				</Text>
 	                       				</View>
 	                       			

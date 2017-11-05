@@ -5,6 +5,8 @@ const RequestUrl = {
 	REGISTER_URL:'http://47.94.157.124/customer/saveCustomer',
 	INTEGRAL_URL:'http://47.94.157.124/indexAdvertisement/turnOut',
 	PERSONALINFORMATION_URL:'http://47.94.157.124/customer/updateData',
+	JIFENZENGZHIPAGE_URL:'http://47.94.157.124/crowdFunding/allCrowdFunding',
+	TIEBAZHUYEPAGE_URL:'http://47.94.157.124/forum/queryForumsJson',
 	// MAINPAGEDETAIL_URL:'http://47.94.157.124/indexAdvertisement/indexDetailed?type=0&indexAdvertisementId=2c91810d5ec75673015ec759bffe0001',
 };
 
