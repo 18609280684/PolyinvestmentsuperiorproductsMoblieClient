@@ -28,7 +28,7 @@ import {
 	ForeignExchangeDetailView,
 	ForumViewDetail
 } from './TabNavigatorRoot/TabNavigatorRoot.js';
-import Toast from 'react-native-simple-toast';
+//import Toast from 'react-native-simple-toast';
 import {
 	scaleSize,
 	setSpText,

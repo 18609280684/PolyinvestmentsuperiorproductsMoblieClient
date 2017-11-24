@@ -8,7 +8,7 @@
 	  ActivityIndicator,
 	  Text,
 	} from 'react-native';
-	import Toast from 'react-native-simple-toast';
+	import Toast from 'react-native-root-toast';
 	
 	class Utils extends Component {
 	  render() {
@@ -42,16 +42,35 @@ export function ToastShow(toastShowString,showTime) {
 	var time = '';
 	switch (showTime){
 			case 1:
-				time = Toast.SHORT;
+				time = Toast.durations.SHORT;
 				break;
 			case 2:
-				time = Toast.LONG;
+				time = Toast.durations.LONG;
 				break;
 			default:
 				time = '';
 		}
 	return(
-		Toast.show(toastShowString,time)
+		Toast.show(toastShowString, {
+			duration: time,
+			position: Toast.positions.CENTER,
+			shadow: true,
+			animation: true,
+			hideOnPress: true,
+			delay: 0,
+			onShow: () => {
+				// calls on toast\`s appear animation start
+			},
+			onShown: () => {
+				// calls on toast\`s appear animation end.
+			},
+			onHide: () => {
+				// calls on toast\`s hide animation start.
+			},
+			onHidden: () => {
+				// calls on toast\`s hide animation end.
+			}
+		})
 	);
 }
 

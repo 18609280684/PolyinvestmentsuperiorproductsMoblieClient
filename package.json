@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
+		"test": "jest",
+		"goa": "react-native run-android"
 	},
 	"dependencies": {
 		"react": "16.0.0-alpha.12",
@@ -12,6 +13,7 @@
 		"react-native-cookie": "^0.2.0",
 		"react-native-loading-spinner-overlay": "^0.5.2",
 		"react-native-popup-dialog": "^0.9.36",
+		"react-native-root-toast": "^2.2.0",
 		"react-native-simple-toast": "0.0.7",
 		"react-native-spinkit": "^1.1.1",
 		"react-native-splash-screen": "^3.0.1",
